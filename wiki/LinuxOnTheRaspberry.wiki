@@ -1,0 +1,7 @@
+#summary One-sentence summary of this page.
+
+= Linux on the Raspberry Pi =
+
+This page is a bit sparse at the moment, but this will change Really Soon (TM). Drivers, I2C, etc.
+
+[http://www.raspberrypi.org/wp-content/uploads/2012/12/quick-start-guide-v1.1.pdf Here's a great quick start guide] to bring a Linux OS image onto the Pi.
