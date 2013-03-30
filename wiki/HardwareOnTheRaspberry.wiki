@@ -2,6 +2,8 @@
 
 = Hardware on the Raspberry =
 
-For now, there's only the P1 pinout. Will grow substantially though.
+This page is a bit sparse at the moment, but this will change Really Soon (TM).
+
+Here is the P1 pinout:
 
 https://lh5.googleusercontent.com/-DY3peh_GwTY/UVbHed7wmLI/AAAAAAAAA8k/AjfjrTt25Ak/s443/GPIOs.png
