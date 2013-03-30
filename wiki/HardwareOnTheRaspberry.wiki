@@ -2,6 +2,6 @@
 
 = Hardware on the Raspberry =
 
-For now, there's only the H1 pinout. Will grow substantially though.
+For now, there's only the P1 pinout. Will grow substantially though.
 
 https://lh5.googleusercontent.com/-DY3peh_GwTY/UVbHed7wmLI/AAAAAAAAA8k/AjfjrTt25Ak/s443/GPIOs.png
