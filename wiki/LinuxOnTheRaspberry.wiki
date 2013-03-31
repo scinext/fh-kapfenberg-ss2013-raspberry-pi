@@ -13,7 +13,8 @@ briefly.
 Here's a great quick start guide] to bring a Linux OS image onto the
 Pi.
 
-If you have Linux on your PC, you'll find the _Win32DiskImager_
+If you have Linux on your PC, you'll find the
+[http://sourceforge.net/projects/win32diskimager/ _Win32DiskImager_]
 section hard to follow. Skip it, and simply instead
 
 {{{
