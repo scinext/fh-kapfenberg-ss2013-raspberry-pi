@@ -33,9 +33,7 @@ afterwards if need be.
 It is a good idea to carry out the following functions,
 
  * _Expand root partition to fill SD card_ (effective at next reboot)
- * _Enable or disable ssh server_. You'll want to enable SSH access if
-   you want to login from you laptop. Windows users use
-   [http://www.putty.org/ PuTTY] for remote login.
+ * _Enable or disable ssh server_. You'll want to enable SSH access if you want to login from you laptop. Windows users use [http://www.putty.org/ PuTTY] for remote login.
 
 = Packages =
 
