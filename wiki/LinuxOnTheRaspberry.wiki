@@ -21,8 +21,9 @@ section hard to follow. Skip it, and simply instead
 # cat 2013-02-09-wheezy-raspbian.img > /dev/sdc
 }}}
 
-where {{{/dev/sdc}}} is your SD card. Make sure you unmount it before
-if it got automounted (likely by your desktop).
+where {{{/dev/sdc}}} is your SD card. (Your situation may be
+different; check {{{/proc/partitions}}} for yours.) Make sure you
+unmount it before if it got automounted (likely by your desktop).
 
 == Configuration ==
 
