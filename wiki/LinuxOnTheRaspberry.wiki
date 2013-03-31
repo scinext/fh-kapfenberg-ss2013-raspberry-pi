@@ -41,8 +41,8 @@ It is a good idea to carry out the following functions,
 = Packages =
 
 The _raspbian_ image is a [http://www.debian.org/ Debian]
-derivative. As such, it uses [APT
-https://help.ubuntu.com/community/AptGet/Howto] for package
+derivative. As such, it uses
+[https://help.ubuntu.com/community/AptGet/Howto APT] for package
 management. Install the packages needed for our project like follows,
 
 {{{
