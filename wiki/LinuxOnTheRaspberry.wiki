@@ -2,6 +2,51 @@
 
 = Linux on the Raspberry Pi =
 
-This page is a bit sparse at the moment, but this will change Really Soon (TM). Drivers, I2C, etc.
+To get Linux running on the Raspi, and to configure it in a way that
+it serves its purpose of a development machine for our project, you'll
+need to perform a couple of steps. These are going to be outlined here
+briefly.
 
-[http://www.raspberrypi.org/wp-content/uploads/2012/12/quick-start-guide-v1.1.pdf Here's a great quick start guide] to bring a Linux OS image onto the Pi.
+= Initial Board Setup =
+
+[http://www.raspberrypi.org/wp-content/uploads/2012/12/quick-start-guide-v1.1.pdf
+Here's a great quick start guide] to bring a Linux OS image onto the
+Pi.
+
+If you have Linux on your PC, you'll find the _Win32DiskImager_
+section hard to follow. Skip it, and simply instead
+
+{{{
+# cat 2013-02-09-wheezy-raspbian.img > /dev/sdc
+}}}
+
+where /dev/sdc is your SD card. Make sure you unmount it before if it
+got automounted (likely by your desktop).
+
+== Configuration ==
+
+The {{{raspi-config}}} is used to perform initial
+configuration. You'll see it at first boot, and can call it anytime
+afterwards if need be.
+
+It is a good idea to carry out the following functions,
+
+ * _Expand root partition to fill SD card_ (effective at next reboot)
+ * _Enable or disable ssh server_. You'll want to enable SSH access if
+   you want to login from you laptop. Windows users use
+   [http://www.putty.org/ PuTTY] for remote login.
+
+= Packages =
+
+The _raspbian_ image is a [http://www.debian.org/ Debian]
+derivative. As such, it uses [APT
+https://help.ubuntu.com/community/AptGet/Howto] for package
+management. Install the packages needed for our project like follows,
+
+{{{
+# apt-get install \
+   subversion \
+   i2c-tools
+}}}
+
+(List to be expanded.)
