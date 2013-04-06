@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Theoretical Stuff =
+
+Some ideas that come and go while thinking about what's going to happen next.
+
+== Filesystem Permissions ==
+
+On the Raspian image, there is a UDev rule which modifies {{{/dev/i2c-*}}} to have {{{rw}}} permissions for group {{{i2c}}}. User {{{pi}}} is not in that group, which we change very early on.
+
+ * What happens here? 
+ * How does this relate to the {{{open(2)}}} system call?
+ * Elaborate on refcounting semantics of a file decriptor and the {{{struct file}}} inside the kernel.
