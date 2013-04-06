@@ -11,3 +11,4 @@ On the Raspian image, there is a UDev rule which modifies {{{/dev/i2c-*}}} to ha
  * What happens here? 
  * How does this relate to the {{{open(2)}}} system call?
  * Elaborate on refcounting semantics of a file decriptor and the {{{struct file}}} inside the kernel.
+ * Jabber on system calls a lot
