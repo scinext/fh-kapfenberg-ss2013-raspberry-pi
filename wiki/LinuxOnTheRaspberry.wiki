@@ -42,6 +42,14 @@ I2C bus {{{/dev/i2c-1}}}. As user {{{root}}} (or using {{{sudo}}}),
 # usermod -a -G i2c pi
 }}}
 
+Ah yes, I2C: it is probably a good idea to have the necessary kernel
+modules loaded at startup. Add these to {{{/etc/modules}}}:
+
+{{{
+i2c-bcm2708
+i2c-dev
+}}}
+
 = Packages =
 
 The _raspbian_ image is a [http://www.debian.org/ Debian]
