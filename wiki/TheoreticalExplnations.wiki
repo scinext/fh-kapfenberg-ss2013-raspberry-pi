@@ -25,3 +25,12 @@ How does one impersonate as one particular user?
  * What's the {{{init}}} process?
  * {{{man 2 setuid}}}
  * Leading to: "What's that {{{sudo}}} all the time?"
+
+== Devices and {{{ioctl(2)}}} ==
+
+{{{open(2)}}} is a system call that works on _anything_ that looks
+like a file. Makes up the meat of the Unixen, together with
+{{{read(2)}}}, {{{write(2)}}} and friends. Generic system calls, so to
+say.
+
+Hardware is not always so simple. Enter {{{ioctl(2)}}}.
