@@ -20,3 +20,8 @@ early on.
  * Elaborate on refcounting semantics of a file decriptor and the {{{struct file}}} inside the kernel.
  * Jabber on system calls a lot
 
+How does one impersonate as one particular user?
+
+ * What's the {{{init}}} process?
+ * {{{man 2 setuid}}}
+ * Leading to: "What's that {{{sudo}}} all the time?"
