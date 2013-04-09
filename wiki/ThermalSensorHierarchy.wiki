@@ -6,7 +6,7 @@ A thermal sensor is something that gives the temperature in degrees Celsius, a f
 
 There are several implementations.
 
- * *Physical I2C Sensor*: [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/TempSensor-TC74.pdf Microchip TC74]
+ * *Physical I2C Sensor*: [http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010749 Microchip TC74]
  * *Physical I2C Sensor*: [http://www.analog.com/en/mems-sensors/digital-temperature-sensors/ad7414/products/product.html Analog Devices AD7414]
  * (Possibly a couple other pieces of real hardware)
  * *TCP Proxy Sensor*. Imagine that the sensors are spread across a, say, food warehouse. I2C imposes a maximum cable length of only a few meters, so we want to use TCP to connect a local sensor object to a remote sensor. [http://en.wikipedia.org/wiki/Proxy_pattern Proxy pattern], applied.
