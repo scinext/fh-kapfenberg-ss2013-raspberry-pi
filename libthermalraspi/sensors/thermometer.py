@@ -1,5 +1,5 @@
 class Thermometer(object):
     def getTemp(self):
         assert False, 'abstract'
-        return -273.0
+        return -273.15
     pass
