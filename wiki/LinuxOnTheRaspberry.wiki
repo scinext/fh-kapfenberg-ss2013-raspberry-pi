@@ -45,13 +45,6 @@ i2c-bcm2708
 i2c-dev
 }}}
 
-When done, add yourself to the {{{i2c}}} group to have access to the
-I2C bus {{{/dev/i2c-1}}}. As user {{{root}}} (or using {{{sudo}}}),
-
-{{{
-# usermod -a -G i2c pi
-}}}
-
 = Packages =
 
 The _raspbian_ image is a [http://www.debian.org/ Debian]
@@ -63,6 +56,13 @@ management. Install the packages needed for our project like follows,
 # apt-get install \
    subversion \
    i2c-tools
+}}}
+
+When done, add yourself to the {{{i2c}}} group to have access to the
+I2C bus {{{/dev/i2c-1}}}. As user {{{root}}} (or using {{{sudo}}}),
+
+{{{
+# usermod -a -G i2c pi
 }}}
 
 (List to be expanded.)
