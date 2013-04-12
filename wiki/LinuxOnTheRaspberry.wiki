@@ -35,12 +35,7 @@ It is a good idea to carry out the following functions,
  * _Expand root partition to fill SD card_ (effective after next reboot)
  * _Enable or disable ssh server_. You'll want to enable SSH access if you want to login from you laptop. Windows users use [http://www.putty.org/ PuTTY] for remote login.
 
-When done, add yourself to the {{{i2c}}} group to have access to the
-I2C bus {{{/dev/i2c-1}}}. As user {{{root}}} (or using {{{sudo}}}),
 
-{{{
-# usermod -a -G i2c pi
-}}}
 
 Ah yes, I2C: it is probably a good idea to have the necessary kernel
 modules loaded at startup. Add these to {{{/etc/modules}}}:
@@ -48,6 +43,13 @@ modules loaded at startup. Add these to {{{/etc/modules}}}:
 {{{
 i2c-bcm2708
 i2c-dev
+}}}
+
+When done, add yourself to the {{{i2c}}} group to have access to the
+I2C bus {{{/dev/i2c-1}}}. As user {{{root}}} (or using {{{sudo}}}),
+
+{{{
+# usermod -a -G i2c pi
 }}}
 
 = Packages =
