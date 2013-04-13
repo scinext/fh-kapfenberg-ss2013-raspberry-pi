@@ -8,3 +8,4 @@ should be of general use for _anybody_ who wants to play with a Raspi.
    administration, network setup.
  * [HardwareOnTheRaspberry Hardware on the Raspi]. Schematics, header
    pinouts, etc.
+ * [RaspberryForDozeUsers Howtos for Windows users.]
