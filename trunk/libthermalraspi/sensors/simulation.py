@@ -7,7 +7,7 @@ class CyclicThermometer(Thermometer):
         self.__temperatures = itertools.cycle(temperatures)
         pass
 
-    def getTemp(self):
+    def get_temperature(self):
         return self.__temperatures.next()
 
     pass
