@@ -10,7 +10,7 @@ class HypotheticalThermometer(I2CDevice, Thermometer):
     def get_temperature(self):
         # select register ("temperature register", according to
         # hypothetical datasheet) for next operation
-        self.write('\x0')
+        self.write('\x00')
 
         # read 2-byte temperature register, and unpack the bytes into
         # 2 8-bit integers which are then combined to form a floating
