@@ -2,7 +2,7 @@
 
 = Thermal Sensors =
 
-A thermal sensor is something that gives the temperature in degrees Celsius, a floating point number. Pythonically, it is something that supports the method {{{getTemp()}}}, returning a floating point number.
+A thermal sensor is something that gives the temperature in degrees Celsius, a floating point number. Pythonically, it is something that supports the method {{{get_temperature()}}}, returning a floating point number.
 
 There are several implementations.
 
