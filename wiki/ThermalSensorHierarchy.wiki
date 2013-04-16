@@ -8,7 +8,11 @@ There are several implementations.
 
  * *I2C Temperature Sensor*: [http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010749 Microchip TC74]
  * *I2C Temperature Sensor*: [http://www.analog.com/en/mems-sensors/digital-temperature-sensors/ad7414/products/product.html Analog Devices AD7414]
- * *I2C Humidity and Temperature Sensor HYT221*: [http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Datenblatt_DE.pdf data sheet], [http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Protokollbeschreibung_DE.pdf protocol description], [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/sensors/hyt221.py source code]
+ * *I2C Humidity and Temperature Sensor HYT221*
+   * [http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Datenblatt_DE.pdf Data sheet]
+   * [http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Protokollbeschreibung_DE.pdf Protocol description]
+   * [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/sensors/hyt221.py Source code ({{{read/write}}})]
+   * [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/sensors/hyt221_smbus.py Source code ({{{python-smbus}}} package)]
  * (Possibly a couple other pieces of real hardware)
  * *TCP Proxy Sensor*. Imagine that the sensors are spread across a, say, food warehouse. I2C imposes a maximum cable length of only a few meters, so we want to use TCP to connect a local sensor object to a remote sensor. [http://en.wikipedia.org/wiki/Proxy_pattern Proxy pattern], applied.
  * *Composite sensor*. Determines the average temperature based on a number of real sensors.
