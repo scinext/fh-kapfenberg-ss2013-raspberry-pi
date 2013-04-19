@@ -10,5 +10,10 @@ class LM73(I2CDevice):
     def get_temperature(self):
         # request temperature
         self.write('\x00')
-        # read temperature
-        return float(struct.unpack('b', self.read(1))[0])
+        # read temperature - 2 Bytes
+        result = self.read(2)
+	b1, b2 = struct.unpack('bb', result)
+	# shift first byte one position to the left and second 3 to the right
+	# &15 and | are used for binary addition of the two bytes
+	Traw = ((b1 & 15) << 1) | ((b2 & 15) >> 3)
+	return float(Traw)
