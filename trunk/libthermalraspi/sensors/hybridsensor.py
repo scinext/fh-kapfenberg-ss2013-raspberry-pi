@@ -1,8 +1,13 @@
+import abc
+
 from libthermalraspi.sensors.thermometer import Thermometer
 
+# Abstract base class for hybrid sensor
+# get_humidity abstract interface
 class HybridSensor(Thermometer):
-    
-    def get_humidity(self):
-        assert False, 'abstract'
-        return 0
+    __metaclass__ = abc.ABCMeta
+        
+    @abc.abstractmethod
+    def get_humidity(self):        
+        return
     
