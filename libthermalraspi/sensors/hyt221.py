@@ -1,10 +1,11 @@
 from libthermalraspi.i2c_device import I2CDevice
-from libthermalraspi.sensors.hybridsensor import HybridSensor
+from libthermalraspi.sensors.thermometer import Thermometer
+from libthermalraspi.sensors.humiditysensor import HumiditySensor
 
 import time
 import struct
 
-class Hyt221(I2CDevice, HybridSensor):
+class Hyt221(I2CDevice, Thermometer, HumiditySensor):
     def __init__(self, bus, addr):
         I2CDevice.__init__(self, bus, addr)
 
