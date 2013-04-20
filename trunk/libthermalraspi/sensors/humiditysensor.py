@@ -1,6 +1,9 @@
+import abc
+
 class HumiditySensor(object):
+    __metaclass__ = abc.ABCMeta
     
+    @abc.abstractmethod
     def get_humidity(self):
-        assert False, 'abstract'
-        return 0
+        return
     
