@@ -1,5 +1,12 @@
 import os
-import fcntl
+
+import platform
+
+# Done by HeKo, since i run the first tests for
+# LM73 under windows it's necessary to load
+# LM73Device successfully!
+if platform.system() != "Windows":
+    import fcntl
 
 class I2CDevice(object):
     I2C_SLAVE = 0x0703 # from <linux/i2c-dev.h>

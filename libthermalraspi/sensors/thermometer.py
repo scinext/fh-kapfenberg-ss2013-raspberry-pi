@@ -1,5 +1,11 @@
+import abc
+
+# Abstract base class for Thermometer objects
+# get_temperature abstract interface
 class Thermometer(object):
+    __metaclass__ = abc.ABCMeta
+    
+    @abc.abstractmethod
     def get_temperature(self):
-        assert False, 'abstract'
-        return -273.15
+        return
     pass
