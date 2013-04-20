@@ -1,9 +1,10 @@
 from libthermalraspi.smbus_device import SMBusDevice
-from libthermalraspi.sensors.hybridsensor import HybridSensor
+from libthermalraspi.sensors.thermometer import Thermometer
+from libthermalraspi.sensors.humiditysensor import HumiditySensor
 
 import time
 
-class Hyt221SMBus(SMBusDevice, HybridSensor):
+class Hyt221SMBus(SMBusDevice, Thermometer, HumiditySensor):
     def __init__(self, bus, addr):
         SMBusDevice.__init__(self, bus, addr)
 
