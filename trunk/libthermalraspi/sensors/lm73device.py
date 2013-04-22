@@ -33,6 +33,12 @@ class LM73Device(Thermometer, I2CDevice):
         
         return LM73Device.create_temperature(msb, lsb)
     
+    def set_resolution(self, resolution):
+        raise Exception('Not yet imlemented')
+    
+    def get_resolution(self):
+        raise Exception('Not yet imlemented')
+    
     @staticmethod
     def create_temperature(msb, lsb):
         tmp = float(int(((msb & 0x7F) << 1) | (lsb >> 7)))                        
