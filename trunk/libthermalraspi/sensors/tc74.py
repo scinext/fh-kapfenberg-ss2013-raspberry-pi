@@ -18,9 +18,10 @@ class TC74Thermometer (I2CDevice, Thermometer):
 
 #Attention it doesn't works with sending a 0-Byte. You must send a empty Datapackage (Adress + no data) 
 		tByte = self.read(1)
-		tRaw = struct.unpack('B', tByte)
+		tRaw = struct.unpack('B', tByte)[0]
 
 #accounting of the temperature based on the temperature table.
 		temp = tRaw
 		if(tRaw > (0,127)):
 			    temp = ((0,255) - tRaw) * (-1)
+		return temp
