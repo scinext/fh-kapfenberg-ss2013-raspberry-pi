@@ -1,4 +1,6 @@
+from __future__ import with_statement
 from libthermalraspi.sensors.lm73device import LM73Device
+from libthermalraspi.sensors.lm73device import ResolutionEnum
 
 import unittest
 import struct
@@ -32,6 +34,25 @@ class LM73DeviceTest(unittest.TestCase):
             self.assertEqual(testDict[key], result)
 
         pass
+
+    def test_setResolution(self):
+        binary_255 = bin(255)
+        self.assertEqual(bin(207), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ZERO))
+        self.assertEqual(bin(223), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ONE))
+        self.assertEqual(bin(239), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.TWO))
+        self.assertEqual(binary_255, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.THREE))
+
+        binary_1=bin(1)
+        self.assertEqual(binary_1, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ZERO))
+        self.assertEqual(bin(17), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ONE))
+        self.assertEqual(bin(33), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.TWO))
+        self.assertEqual(bin(49), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.THREE))
+        pass
+
+    def test_setInvalidResolution(self):
+        with self.assertRaises(Exception):
+            LM73Device.getManipulatedResolution(bin(1),4)
+    pass
 
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(LM73DeviceTest)
 
