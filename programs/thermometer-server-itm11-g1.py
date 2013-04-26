@@ -1,23 +1,57 @@
 #! /usr/bin/python
 
-import socket, sys
+import socket, sys, threading
+from libthermalraspi.sensors.simulation import CyclicThermometer
 
-HOST = "localhost"
-PORT = int(sys.argv[1])
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind((HOST,PORT))
-sock.listen(1)
-
-while True:
-	conn, addr = sock.accept()
-	print "Connected to something"
+class SocketServer():
 	
-	data = ""
-	while data != "BYE":
-		data = conn.recv(1024)
-		print(data)
-	
-	conn.close()
-	print("Connection closed")
+	def __init__(self, host="localhost", port=1234, thermometer=None):
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.sock.bind((host, port))
+		self.sock.listen(1)
+		self.thermometer = thermometer if thermometer else CyclicThermometer([2, 3.5, 4])
+
+	def start(self):
+		print("Temperature Server started...")
+		
+		while True:
+			conn, _ = self.sock.accept()
+			ClientConnection(conn, self.thermometer).start()
+			
+		self.sock.close() # TODO: define some break condition
+
+class ClientConnection(threading.Thread):
+
+	def __init__(self, conn, thermometer):
+		threading.Thread.__init__(self)
+		self.conn = conn
+		self.thermometer = thermometer
+		
+	def run(self):
+			client = self.conn.getpeername()[0] + ":" + str(self.conn.getpeername()[1])
+			
+			print(client + " connected") 
+			self.conn.sendall("Welcome to the Raspberry Pi thermometer server!\nType HELP for a list of available commands.\n")
+			
+			data = ""  # init data
+			while "BYE" not in data:
+				data = self.conn.recv(1024)
+				print(client + ": " + data)
+					
+				if "HELP" in data:
+					self.conn.sendall("\n====== COMMANDS ======\nHELP\nGET_TEMP\nBYE\n\n")
+				if "GET_TEMP" in data:
+					print("Temperature data requested by " + client + ". Sending...")
+					self.conn.sendall(str(self.thermometer.get_temperature()) + "\n")  # send actual data
+			
+			self.conn.close()
+			print(client + " closed connection")
+			
+		
+HOST = sys.argv[1]
+PORT = int(sys.argv[2])
+
+if __name__ == '__main__':
+    server = SocketServer(HOST, PORT)
+    server.start()
 
