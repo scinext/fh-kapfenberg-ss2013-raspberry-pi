@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+/Users/ludwiglindlbauer/Documents/Development/FH Joanneum/SVN/trunk/android/.metadata/.plugins/org.eclipse.jdt.core
+1588220317.index
+965161535.index
+2815791078.index
