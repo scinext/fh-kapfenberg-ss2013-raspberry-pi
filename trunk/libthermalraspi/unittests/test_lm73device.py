@@ -36,17 +36,20 @@ class LM73DeviceTest(unittest.TestCase):
         pass
 
     def test_setResolution(self):
-        binary_255 = bin(255)
-        self.assertEqual(bin(207), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ZERO))
-        self.assertEqual(bin(223), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ONE))
-        self.assertEqual(bin(239), LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.TWO))
-        self.assertEqual(binary_255, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.THREE))
+        tmp_tuple = struct.pack("BB",255,1)#just for testing
+        binary_tuple = struct.unpack("BB", tmp_tuple)
+        binary_255 = binary_tuple[0]
+        binary_1 = binary_tuple[1]
 
-        binary_1=bin(1)
-        self.assertEqual(binary_1, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ZERO))
-        self.assertEqual(bin(17), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ONE))
-        self.assertEqual(bin(33), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.TWO))
-        self.assertEqual(bin(49), LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.THREE))
+        self.assertEqual(207, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ZERO))
+        self.assertEqual(223, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.ONE))
+        self.assertEqual(239, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.TWO))
+        self.assertEqual(255, LM73Device.getManipulatedResolution(binary_255,ResolutionEnum.THREE))
+
+        self.assertEqual(1, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ZERO))
+        self.assertEqual(17, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.ONE))
+        self.assertEqual(33, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.TWO))
+        self.assertEqual(49, LM73Device.getManipulatedResolution(binary_1,ResolutionEnum.THREE))
         pass
 
     def test_setInvalidResolution(self):
