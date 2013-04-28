@@ -43,8 +43,8 @@ class LM73Device(Thermometer, I2CDevice):
         binaryData = self.read(1)
         unpackedData =struct.unpack('B', binaryData)
 
-        newBinaryData = LM73Device.getManipulatedResolution(unpackedData[0], resolution)
-        self.write(struct.pack('B', newBinaryData))
+        newData = LM73Device.getManipulatedResolution(unpackedData[0], resolution)
+        self.write(struct.pack('B', newData))
 
     def get_resolution(self):
         # select Control/Status register
@@ -61,7 +61,7 @@ class LM73Device(Thermometer, I2CDevice):
         # 01: 0.125°C/LSB, 12-bit word (11 bits plus Sign)
         # 10: 0.0625°C/LSB, 13-bit word (12 bits plus Sign)
         # 11: 0.03125°C/LSB, 14-bit word (13 bits plus Sign)
-        data = struct.unpack('BB', binaryData)
+        data = struct.unpack('B', binaryData)
         return LM73Device.resolveResolution(data)
 
     @staticmethod
@@ -69,44 +69,17 @@ class LM73Device(Thermometer, I2CDevice):
         if resolution > 3 or resolution < 0:
            raise Exception('Resolution have to be > 0 and < 4. Use the appropriate static values from ResolutionEnum!')
 
-        #we dont want to lose leading zeros because
-        #we want to make sure that we are able to set the bits for the resolution
-        binaryString='0b'+(data[2:]).zfill(8)
+        resetResMask = 0xCF #11001111
+        resetedRes =data & resetResMask
+
         if resolution == ResolutionEnum.ZERO:
-            return LM73Device.setAndGetResponseBinary(binaryString, "0", "0")
+            return resetedRes
         elif resolution == ResolutionEnum.ONE:
-           return LM73Device.setAndGetResponseBinary(binaryString, "0", "1")
+            return resetedRes | 0x10 # 0001 0000
         elif resolution == ResolutionEnum.TWO:
-            return LM73Device.setAndGetResponseBinary(binaryString, "1", "0")
+            return resetedRes | 0x20 # 0010 0000
         elif resolution == ResolutionEnum.THREE:
-             return LM73Device.setAndGetResponseBinary(binaryString, "1", "1")
-
-
-    @staticmethod
-    def setAndGetResponseBinary(data,res1,res0):
-        """
-            Sets the Resolution1 and Resolution0 Bit
-        """
-        i=0
-        newBinary=''
-        while i< len(data):
-            if i!= 4 and i!= 5:
-                newBinary+=data[i]
-            elif i== 4:
-                newBinary+=res1
-            elif i== 5:
-                newBinary+=res0
-            i+=1
-        pass
-        return bin(int(newBinary,2))#convert String back to binary
-
-
-    @staticmethod
-    def checkIfEvenOrOdd(value):
-        if (value & 1) != 0:
-            return 1
-        return 0
-
+            return resetedRes | 0x30 # 0011 0000
 
     @staticmethod
     def resolveResolution(data):
@@ -118,19 +91,8 @@ class LM73Device(Thermometer, I2CDevice):
         3 0.03125°C/LSB, 14-bit word (13 bits plus Sign)
         """
         a = struct.unpack('B', data)
-        fourBits = (a[0] >> 4) #max. 4 Bits set
-
-        res = LM73Device.checkIfEvenOrOdd(fourBits)
-
-        threeBits = (fourBits >> 1)#eliminate lsb
-        res2 = LM73Device.checkIfEvenOrOdd(threeBits)
-
-        if res2 == 1:# we have to increment if this bit is set
-            res+=1
-
-        return res+res2
-
-
+        mask=0x30 #00110000
+        return(a[0] & mask)>> 4
 
     @staticmethod
     def create_temperature(msb, lsb):
@@ -150,7 +112,7 @@ class LM73Device(Thermometer, I2CDevice):
         return tmp
 
 """
-    This class represents enum-like values. These values are the possible resolution values for our Sensor!
+    This class represents enum-like values. These values are the possible resolution values for our sensor!
     @see: getManipulatedResolution
 """
 class ResolutionEnum:
