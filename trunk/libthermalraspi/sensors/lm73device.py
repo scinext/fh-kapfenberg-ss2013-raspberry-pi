@@ -6,7 +6,7 @@ from libthermalraspi.i2c_device import I2CDevice
 from libthermalraspi.sensors.thermometer import Thermometer
 
 # Not yet tested on raspberry
-# create_temperature() successfully tested against
+# all methods successfully tested against
 # datasheet specs.
 class LM73Device(Thermometer, I2CDevice):
     """

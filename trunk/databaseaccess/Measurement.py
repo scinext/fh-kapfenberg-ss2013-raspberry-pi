@@ -5,15 +5,15 @@ class Measurement:
 		self._timestamp = timestamp
 		self._measureVal = measureVal
 		self._errorCode = errorCode
-		
-	def getSensorname():
+
+	def getSensorname(self):
 		return self._sensor.getName()
 
-	def getTimestamp():
+	def getTimestamp(self):
 		return self._timestamp
-		
-	def getMeasureVal():
+
+	def getMeasureVal(self):
 		return self._measureVal
-		
-	def getErrorCode():
+
+	def getErrorCode(self):
 		return self._errorCode
