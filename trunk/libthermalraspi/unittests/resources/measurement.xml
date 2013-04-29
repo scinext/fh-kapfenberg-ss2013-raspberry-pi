@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<response>
+	<item errorCode="0" name="Strawberry" timestamp="1367168460" value="20.12"/>
+	<item errorCode="0" name="Raspberry" timestamp="1367168460" value="30"/>
+	<item errorCode="1" name="Banana" timestamp="1367168467" value="27.132"/>
+	<item errorCode="0" name="Blackberry" timestamp="1367168461" value="27.132"/>
+</response>
