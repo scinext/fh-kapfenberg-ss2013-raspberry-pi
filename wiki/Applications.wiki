@@ -70,8 +70,9 @@ create table samples (
 }}}
 
 A single process is dedicated to filling the database. Note that
-SQLIte3 supports access to a database from multiple processes, but
+SQLite3 supports access to a database from multiple processes, but
 only one of those can write to it. (See [here
 http://www.sqlite.org/faq.html#q5] for the whole story.)
 
-This retriction is fine for us --- we can have multiple readers
+This retriction is fine for us --- we can have multiple readers, which
+is what we will.
