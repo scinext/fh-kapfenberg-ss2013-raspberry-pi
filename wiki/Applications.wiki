@@ -9,6 +9,7 @@ moved out if need be.)
 
 == Data Logger ==
 
+beitl
 http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/Datalogger-UML.png
 
 === The !DataStore Interface and its Responsibilities ===
