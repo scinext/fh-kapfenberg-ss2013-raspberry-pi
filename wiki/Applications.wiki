@@ -99,13 +99,17 @@ def add_sample(sample):
 This not the most efficient way of maintaining an ordered list, but
 anyway, it's not for sale.
 
-=== The Data Logger Server ===
+=== The Data Logger Server and the Protocol ===
 
 A simple TCP server answers queries from clients, by making the
 collected samples visible to the outside world. The server's design is
 _iterative_, as follows.
 
- * *It handles one incoming connection after the other*. No threads
-   are created, no process is forked.
- * *It handles one request per connection*. The server sits in a call to
-   {{{accept()}}} until a connection comes in, 
+*It handles one incoming connection after the other*. No threads are
+created, no process is forked.
+
+*It handles one request per connection*. The server sits in a call to
+{{{accept()}}} until a connection comes in, then reads the request
+until complete, and then writes the response. The connection is closed
+after the response has been written.
+
