@@ -80,3 +80,21 @@ only one of those can write to it. (See
 
 This retriction is fine for us --- we can have multiple readers, which
 is what we will.
+
+=== In-Memory !DataStore Incarnation ===
+
+For testing (we want to implement a TCP server that serves samples),
+there has to be one implementation of the {{{!DataStore}}} interface
+which keeps its samples in memory. One possibility of doing this is to
+keep a list of tuples (the samples), append to it in
+{{{store.add_sample(s)}}}, and sort the list by its timestamp. Like
+so,
+
+{{{
+def add_sample(sample):
+    self.__samples.append(sample)
+    self.__samples = sorted(self.__samples, lambda a,b: a[0]<b[0])
+}}}
+
+This not the most efficient way of maintaining an ordered list, but
+anyway, it's not for sale.
