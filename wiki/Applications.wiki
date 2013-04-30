@@ -10,7 +10,7 @@ moved out if need be.)
 == Data Logger ==
 
 See
-[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/Datalogger-UML.png here] for details.
+[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/Datalogger-UML.png] for details.
 
 === The !DataStore Interface and its Responsibilities ===
 
