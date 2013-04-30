@@ -9,7 +9,9 @@ moved out if need be.)
 
 == Data Logger ==
 
-See [here http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/Datalogger-UML.png] for details.
+See
+[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/Datalogger-UML.png
+here] for details.
 
 === The !DataStore Interface and its Responsibilities ===
 
@@ -73,8 +75,8 @@ create table samples (
 
 A single process is dedicated to filling the database. Note that
 SQLite3 supports access to a database from multiple processes, but
-only one of those can write to it. (See [here
-http://www.sqlite.org/faq.html#q5] for the whole story.)
+only one of those can write to it. (See
+[http://www.sqlite.org/faq.html#q5 here] for the whole story.)
 
 This retriction is fine for us --- we can have multiple readers, which
 is what we will.
