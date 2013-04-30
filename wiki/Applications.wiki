@@ -11,8 +11,8 @@ moved out if need be.)
 
 === The !DataStore Interface and its Responsibilities ===
 
-We use a "DataStore" class to abstract away databases. Nobody wants to
-carry the burden of a database when, for example, hacking on a
+We use a "!DataStore" class to abstract away databases. Nobody wants
+to carry the burden of a database when, for example, hacking on a
 visualization GUI.
 
 A data store's job is to store samples. It is filled by somebody who
@@ -36,7 +36,7 @@ sample = (datetime.datetime.utcnow(),
 store.add_sample(sample)
 }}}
 
-=== !SQLite3 !DataStore Incarnation ===
+=== SQLite3 !DataStore Incarnation ===
 
 The "real life" incarnation of a data store maintains a SQLite3
 database. The database has a single table "samples".
