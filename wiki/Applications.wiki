@@ -121,5 +121,10 @@ Request:
 <request id="get_samples" from="2013-04-30 08:03:34" to="2013-04-30 09:19:52">
 }}}
 
-In Python, you use {{{"%04d-%02d-%02d %02d:%02d:%02d" % (dt.year,
-dt.month, dt.day, dt.hour, dt.minute, dt.second)}}}
+In Python, you use the following to convert back and forth between
+{{{datetime.datetime}}} and strings,
+
+{{{
+s = "%04d-%02d-%02d %02d:%02d:%02d" % (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+dt = datetime.datetime.strptime(s, '%d-%m-%Y %H:%M:%S')
+}}}
