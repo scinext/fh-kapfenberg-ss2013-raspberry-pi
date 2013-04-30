@@ -115,7 +115,7 @@ based. Currently we have only one possible request,
 as the demand for the application grows. Hence any request must carry
 its identifier with it (which is good protocol design anyway).
 
-Request:
+*Request*:
 
 {{{
 <request id="get_samples" from="2013-04-30 08:03:34" to="2013-04-30 09:19:52">
@@ -128,3 +128,27 @@ In Python, you use the following to convert back and forth between
 s = "%04d-%02d-%02d %02d:%02d:%02d" % (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
 dt = datetime.datetime.strptime(s, '%d-%m-%Y %H:%M:%S')
 }}}
+
+*Response*:
+
+{{{
+<response>
+  <status error="ok" />
+  <samples>
+    <sample timestamp="2013-04-30 08:03:38"
+            sensorname="Sensor in the third row, middle, bottom"
+	    temperature="10.25"
+	    status="0" />
+    <sample timestamp="2013-04-30 08:03:38"
+            sensorname="Sensor in the third row, middle, top"
+	    temperature="11.5"
+ 	    status="0" />
+  </samples>
+</response>
+
+Note that we have two {{{status}}} attributes in the response. The
+response global {{{status}}} is the status of the entire response, and
+this can be {{{ok}}}, {{{overflow}}} (if the server encountered a
+query result overflow condition for example), and whatnot. The
+per-sample {{{status}}} attribute is the error status of one
+particular sensor.
