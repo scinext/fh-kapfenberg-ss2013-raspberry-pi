@@ -25,8 +25,9 @@ A data store's job is to
  * retrieve samples
 
 The store is filled by somebody who produces samples at a regular
-interval. Pythonically, one can imagine that the following code
-fragment would produce one sample.
+interval. Pythonically, a sample is simply a tuple {{{(timestamp,
+sensorname, temperature, status)}}}. One can imagine that the
+following code fragment would produce one sample.
 
 {{{
 import datetime
