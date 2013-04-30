@@ -107,3 +107,5 @@ _iterative_, as follows.
 
  * *It handles one incoming connection after the other*. No threads
    are created, no process is forked.
+ * *It handles one request per connection*. The server sits in a call to
+   {{{accept()}}} until a connection comes in, 
