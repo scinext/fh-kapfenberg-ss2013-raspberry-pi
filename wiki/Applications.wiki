@@ -105,11 +105,21 @@ A simple TCP server answers queries from clients, by making the
 collected samples visible to the outside world. The server's design is
 _iterative_, as follows.
 
-*It handles one incoming connection after the other*. No threads are
-created, no process is forked.
+ * *It handles one incoming connection after the other*. No threads are created, no process is forked.
+ * *It handles one request per connection*. The server sits in a call to {{{accept()}}} until a connection comes in, then reads the request
+until complete, and then writes the response. The connection is closed after the response has been written.
 
-*It handles one request per connection*. The server sits in a call to
-{{{accept()}}} until a connection comes in, then reads the request
-until complete, and then writes the response. The connection is closed
-after the response has been written.
+The protocol spoken between a client and the server is XML
+based. Currently we have only one possible request,
+{{{get_samples(from, to)}}}, but we can imagine that there may be more
+as the demand for the application grows. Hence any request must carry
+its identifier with it (which is good protocol design anyway).
 
+Request:
+
+{{{
+<request id="get_samples" from="2013-04-30 08:03:34" to="2013-04-30 09:19:52">
+}}}
+
+In Python, you use {{{"%04d-%02d-%02d %02d:%02d:%02d" % (dt.year,
+dt.month, dt.day, dt.hour, dt.minute, dt.second)}}}
