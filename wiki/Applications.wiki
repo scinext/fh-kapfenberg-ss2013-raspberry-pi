@@ -1,0 +1,42 @@
+= Applications using the Sensor Hierarchy =
+
+The primary application is a data logger --- a process that
+periodicaly scans a configured set of sensors, and logs their reports
+into a database.
+
+(As this is the only application so far, we document it here. To be
+moved out if need be.)
+
+== Data Logger ==
+
+=== The !DataStore Interface and its Responsibilities ===
+
+We use a "DataStore" class to abstract away databases. Nobody wants to
+carry the burden of a database when, for example, hacking on a
+visualization GUI.
+
+A data store's job is to store samples. It is filled by somebody who
+produces samples at a regular interval. Pythonically, one can imagine
+that the following code fragment would produce one sample.
+
+{{{
+import datetime
+
+try:
+    temperature = t.get_temperature()
+    status = 0
+except Thermometer.Error as e:
+    temperature = 0.0
+    status = e.status
+
+sample = (datetime.datetime.utcnow(), 
+          "Sensor in the third row, middle, bottom",
+	  temperature,
+          status)
+store.add_sample(sample)
+}}}
+
+=== !SQLite3 !DataStore Incarnation ===
+
+The "real life" incarnation of a data store maintains a SQLite3
+database. The database has a single table "samples".
