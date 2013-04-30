@@ -98,3 +98,12 @@ def add_sample(sample):
 
 This not the most efficient way of maintaining an ordered list, but
 anyway, it's not for sale.
+
+=== The Data Logger Server ===
+
+A simple TCP server answers queries from clients, by making the
+collected samples visible to the outside world. The server's design is
+_iterative_, as follows.
+
+*It handles one incoming connection after the other*. No threads are
+created, no process is forked.
