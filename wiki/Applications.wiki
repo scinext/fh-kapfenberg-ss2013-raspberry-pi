@@ -39,4 +39,14 @@ store.add_sample(sample)
 === SQLite3 !DataStore Incarnation ===
 
 The "real life" incarnation of a data store maintains a SQLite3
-database. The database has a single table "samples".
+database. The database has a single table "samples" which is set up to
+contain the sample tuples.
+
+{{{
+create table samples (
+  timestamp datetime,
+  sensorname varchar(30),
+  temperature real,
+  status int
+)
+}}}
