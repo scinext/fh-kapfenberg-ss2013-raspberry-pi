@@ -1,9 +1,8 @@
 import struct
 
 from i2c_device import I2CDevice
-from outputs.led import Led
 
-class BlinkM(I2CDevice, Led):
+class BlinkM(I2CDevice):
     GO_TO_RGB = '\x6e'
     FADE_TO_RGB = '\x63'
     FADE_TO_HSB = '\x68'
