@@ -41,7 +41,7 @@ for childProcess in _childProcesses:
 _listTemperatures = map(float, _listTemperatures)
 avgTemperature = sum(_listTemperatures) / len(_listTemperatures)
 
-print "***************************************"
+print "****************************************"
 print "Durchschnittstemperatur betraegt: " + str(avgTemperature)
-print "***************************************"
+print "****************************************"
             
