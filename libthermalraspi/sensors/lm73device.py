@@ -67,7 +67,7 @@ class LM73Device(Thermometer, I2CDevice):
     @staticmethod
     def getManipulatedResolution(data, resolution):
         if resolution > 3 or resolution < 0:
-           raise Exception('Resolution have to be > 0 and < 4. Use the appropriate static values from ResolutionEnum!')
+            raise Exception('Resolution have to be > 0 and < 4. Use the appropriate static values from ResolutionEnum!')
 
         resetResMask = 0xCF #11001111
         resetedRes =data & resetResMask
