@@ -27,7 +27,7 @@ class LM73DeviceTest(unittest.TestCase):
         #240: 1111 0000
 
         testDict= {240:3, 48:3, 32:2, 16:1,0:0, 255:3}
-        for key,val in testDict.iteritems():
+        for key,val in testDict.items():
             #print("key:" + str(key)+" value:"+ str(testDict[key]))
             binaryData = struct.pack("B", key)
             result = LM73Device.resolveResolution(binaryData)
