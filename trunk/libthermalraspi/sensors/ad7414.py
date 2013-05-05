@@ -34,4 +34,4 @@ class AD7414Thermometer(I2CDevice, Thermometer):
     	# outlined in the DS (cut off the
     	# right-most six bits) and perform
     	# Temp-Calculation formular.
-        return float((((msb << 8) | lsb) >> 6)/4)
+        return float((((msb << 8) | lsb) >> 6)/4.0)
