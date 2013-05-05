@@ -20,18 +20,18 @@ class AD7414Thermometer(I2CDevice, Thermometer):
 
     @staticmethod
     def __bitshift_to_hardware_float(msb, lsb):
-    	# 0000 0000 | 0000 0000
-    	# -- msb -- | -- lsb --
-    	# needed bits are: 0000 0000 | 00
-    	
-    	# To avoid overwriting the msb
-    	# (most significant byte) with the lsb
-    	# (least significant byte), the msb
-    	# must be bit-shifted 8 bits left and
-    	# be combined with the lsb at the end.
-    	# Following this, both bytes must be
-    	# shifted to the proper position as
-    	# outlined in the DS (cut off the
-    	# right-most six bits) and perform
-    	# Temp-Calculation formular.
+        # 0000 0000 | 0000 0000
+        # -- msb -- | -- lsb --
+        # needed bits are: 0000 0000 | 00
+        
+        # To avoid overwriting the msb
+        # (most significant byte) with the lsb
+        # (least significant byte), the msb
+        # must be bit-shifted 8 bits left and
+        # be combined with the lsb at the end.
+        # Following this, both bytes must be
+        # shifted to the proper position as
+        # outlined in the DS (cut off the
+        # right-most six bits) and perform
+        # Temp-Calculation formular.
         return float((((msb << 8) | lsb) >> 6)/4.0)
