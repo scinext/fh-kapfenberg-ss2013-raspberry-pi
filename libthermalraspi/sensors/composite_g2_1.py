@@ -16,15 +16,15 @@ class CompositeSensor(Thermometer):
         _r, _w = os.pipe()
         
         for listSensor in self.__listSensors:
-            print("next sensor") 
+            # next sensor
             newpid = os.fork()
             if newpid == 0: # parent process
                 os.close(_r)
-                _w = os.fdopen(_w, 'w')
-                print "child: writing - " + str(listSensor.get_temperature())
+                _w = os.fdopen(_w, 'w')                
+                # child: writing temperature
                 _w.write(str(listSensor.get_temperature())+ "\n")
                 _w.close()
-                print "child: closing"
+                # child: closing
                 os._exit(0)
             else:
                 _childProcesses.append(newpid)           
@@ -34,8 +34,8 @@ class CompositeSensor(Thermometer):
             
         for childProcess in _childProcesses:
             os.waitpid(childProcess, 0)
-            temperature = _r.readline()
-            print "parent: reading from " + str(childProcess) + " => temperature is " + temperature  
+            temperature = _r.readline()  
+            # parent: read temperature from child process
             _listTemperatures.append(temperature)
         
         _listTemperatures = map(float, _listTemperatures)
