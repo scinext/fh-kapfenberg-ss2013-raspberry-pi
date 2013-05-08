@@ -9,9 +9,23 @@ import threading
 import logging
 import os
 import sys
+import datetime
+from xml.dom.minidom import parseString
 
-TEST_XML = b"""<?xml version="1.0" encoding="utf-8"?>
-<test></test>
+TEST_RESPONSE = """
+<response id="$(id)" from="$(from)" to="$(to)">
+  <status error="ok" />
+  <samples>
+    <sample timestamp="2013-04-30 08:03:38"
+            sensorname="Sensor in the third row, middle, bottom"
+            temperature="10.25"
+            status="0" />
+    <sample timestamp="2013-04-30 08:03:38"
+            sensorname="Sensor in the third row, middle, top"
+            temperature="11.5"
+            status="0" />
+  </samples>
+</response>
 """
 
 DEFAULT_HOST = "localhost"
@@ -36,6 +50,7 @@ class TempServer(object):
         
     def start(self):        
         try:             
+            print("Server startet at " + str(datetime.datetime.now()) + "...")
             self.__logger.info("Server startet...")           
             
             self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,7 +59,7 @@ class TempServer(object):
             
             while True: 
                 conn, _ = self.__sock.accept()
-                print("new connection accepted...")
+                print("new connection accepted at " + str(datetime.datetime.now()) + "...")
                 ResponseHandler(conn, self.__logger, self.__testmode).start()
             
         except socket.error as e:
@@ -59,6 +74,7 @@ class TempServer(object):
             if self.__sock != None:
                 self.__sock.close()
             self.__logger.info("Server stopped...")
+            print("Server stopped at " + str(datetime.datetime.now()) + "...")
                             
     @staticmethod
     def __createLogger(logfile, level = logging.INFO):
@@ -82,8 +98,10 @@ class ResponseHandler(threading.Thread):
         try:
             self.__logger.info("Response requested...")
             
-            if self.__testmode == True:
-                self.__connection.send(TEST_XML)
+            (sid, sdtf, sdtt) = self.__getDateRange()            
+            
+            if self.__testmode == True:                
+                self.__connection.send(TEST_RESPONSE.replace("$(id)", sid).replace("$(from)", sdtf).replace("$(to)", sdtt).encode('UTF-8'))
             else:
                 # todo...
                 pass
@@ -92,6 +110,28 @@ class ResponseHandler(threading.Thread):
             self.__logger.exception("Response failed by an unexpected error: %s" % e)
         finally:
             self.__connection.close()
+            
+    def __getDateRange(self):
+        xml = self.__getXml()
+        
+        if xml != None:
+            xi = xml.documentElement.getAttributeNode('id')
+            xf = xml.documentElement.getAttributeNode('from')
+            xt = xml.documentElement.getAttributeNode('to')
+            self.__logger.info("id = " + xi.nodeValue + ", from = " + xf.nodeValue + ", to = " + xt.nodeValue)
+            return (str(xi.nodeValue), str(xf.nodeValue), str(xt.nodeValue))
+        else:
+            self.__logger.info("Xml is null!")
+        return ""
+            
+    
+    def __getXml(self):
+        xmlstr = self.__connection.recv(1024)
+        
+        if len(xmlstr) > 0:
+            xml = parseString(xmlstr)
+            return xml
+        return None
 
 if __name__ == '__main__':    
     host = DEFAULT_HOST = "localhost"
