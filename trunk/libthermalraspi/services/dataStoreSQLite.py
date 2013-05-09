@@ -1,9 +1,14 @@
-import abc
+#!/usr/bin/python
+from libthermalraspi.services.dataStore import DataStore
+from databaseaccess.SensorDAO import SensorDAO
+from databaseaccess.MeasurementDAO import MeasurementDAO
 
-class DataStore(object):
-    __metaclass__ = abc.ABCMeta
+class DataStoreSQLite(DataStore):
+    """Verbindungsklasse zur Abstraktion des Datenbankzugriffs."""
 
-    @abc.abstractmethod
+    def __init__(self):
+        pass
+
     def get_sample(self, fromDatetime, toDatetime, maxResultCount = None, sensorIDs = None):
         """Anzahl von Messwerten eines Zeitraumes aus der Datenbank auslesen.
            Parameter:
@@ -12,9 +17,9 @@ class DataStore(object):
            maxResultCount -- int, maximale Anzahl der auszulesenden Messwerte - Standardwert: None
            sensorIDs      -- int[], Liste der auszulesenden SensorenIDs wie in der Datenbank gespeichert - Standardwert: None
         """
-        return
+        return SensorDAO.readMeasurements(fromDatetime, toDatetime, maxResultCount, sensorIDs)
+        pass
      
-    @abc.abstractmethod
     def add_sample(self, timestamp, sensorname, temperatur, status):
         """Messwert eines bestimmten Sensors in die Datenbank schreiben.
            Parameter:
@@ -23,5 +28,7 @@ class DataStore(object):
            temperatur   -- float, Wert der gemessenen Temperatur
            status       -- int, Status des Sensors
         """
-        return
+        sample = MeasurementDAO(sensorname, timestamp, temperatur, status)
+        sample.insert()
+        pass
     
