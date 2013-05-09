@@ -6,12 +6,7 @@ class SampleCollector(object):
     __metaclass__ = abc.ABCMeta
     
     @abc.abstractmethod
-    def get_temperature(self):
-        return
-    pass
-    
-    @abc.abstractmethod
-    def configuration(self, sensorNamesList=[] ):
+    def configuration(self, sensorList=[] ):
         """Sammler der Messdaten mit Liste aller abzufragenden Sensoren versorgen."""
         return
     
