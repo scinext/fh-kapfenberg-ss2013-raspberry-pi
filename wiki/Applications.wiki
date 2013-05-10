@@ -146,6 +146,7 @@ dt = datetime.datetime.strptime(s, '%d-%m-%Y %H:%M:%S')
  	    status="0" />
   </samples>
 </response>
+}}}
 
 Note that we have two {{{status}}} attributes in the response. The
 response global {{{status}}} is the status of the entire response, and
