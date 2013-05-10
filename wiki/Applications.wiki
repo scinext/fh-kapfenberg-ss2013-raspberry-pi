@@ -107,8 +107,7 @@ collected samples visible to the outside world. The server's design is
 _iterative_, as follows.
 
  * *It handles one incoming connection after the other*. No threads are created, no process is forked.
- * *It handles one request per connection*. The server sits in a call to {{{accept()}}} until a connection comes in, then reads the request
-until complete, and then writes the response. The connection is closed after the response has been written.
+ * *It handles one request per connection*. The server sits in a call to {{{accept()}}} until a connection comes in, then reads the request until complete, and then writes the response. The connection is closed after the response has been written.
 
 The protocol spoken between a client and the server is XML
 based. Currently we have only one possible request,
