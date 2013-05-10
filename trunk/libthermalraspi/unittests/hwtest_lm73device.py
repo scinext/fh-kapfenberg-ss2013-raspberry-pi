@@ -10,10 +10,10 @@ import unittest
 
 class LM73DeviceHWTest(unittest.TestCase):
     def test__resolution(self):
-        dev = LM73Device(1, 47)
+        dev = LM73Device(1, 0x48)
         res = dev.get_resolution()
         # todo...
-        dev.set_resolution(res)
+        #dev.set_resolution(res)
         # verify...
     
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(LM73DeviceHWTest)
