@@ -90,9 +90,8 @@ class LM73Device(Thermometer, I2CDevice):
         2 for 0.0625°C/LSB, 13-bit word (12 bits plus Sign)
         3 0.03125°C/LSB, 14-bit word (13 bits plus Sign)
         """
-        a = struct.unpack('B', data)
         mask=0x30 #00110000
-        return(a[0] & mask)>> 4
+        return(data[0] & mask)>> 4
 
     @staticmethod
     def create_temperature(msb, lsb):
