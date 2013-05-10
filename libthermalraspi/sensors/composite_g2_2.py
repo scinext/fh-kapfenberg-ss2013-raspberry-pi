@@ -22,7 +22,7 @@ class CompositeSensor(Thermometer):
             if (child == 0):
                 # write some formatted temp stuff in the pipe
                 os.write(childWrite, str(item.get_temperature()).zfill(7))
-                exit()
+                os._exit(0)
             else:
                 # save the pid of all childs
                 child_ids[index]=child
@@ -40,7 +40,7 @@ class CompositeSensor(Thermometer):
                     # read exact 7 bytes from pipe
                     temp = os.read(pipes[index],7)
                     temperatures.append(float(temp))
-                    print("%s with pid(%s) sent: %3.3f" % (index,cid,float(temp)))
+                    '''print("%s with pid(%s) sent: %3.3f" % (index,cid,float(temp)))'''
         return sum(temperatures) / len(temperatures)
 
 
