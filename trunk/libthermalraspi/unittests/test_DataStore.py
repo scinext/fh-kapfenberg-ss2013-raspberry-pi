@@ -1,16 +1,16 @@
 #!/usr/bin/python
-from databaseaccess.Measurement import Measurement
-from databaseaccess.InMemoryDataStore import InMemoryDataStore
-from databaseaccess.DataStoreSQL import DataStoreSQL
+from libthermalraspi.database.Measurement import Measurement
+from libthermalraspi.database.DataStoreInMemory import DataStoreInMemory
+from libthermalraspi.database.DataStoreSQL import DataStoreSQL
 import datetime
 import unittest
 import sqlite3
 import os
 
 
-class DBAccesstest(unittest.TestCase):
+class Datastoretest(unittest.TestCase):
     def setUp_InMemory(self):
-        self._datastore = InMemoryDataStore()
+        self._datastore = DataStoreInMemory()
 		
     def setUp_SQL(self):
         connection = sqlite3.connect(":memory:")
@@ -47,10 +47,10 @@ class DBAccesstest(unittest.TestCase):
         self.get_samples()
 	
     def add_sample(self):
-        self._datastore.add_sample(Measurement("testsensor",datetime.datetime.strptime("2013-01-30 23:56","%Y-%m-%d %H:%M"),33.33,"Mein Error"))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:57","%Y-%m-%d %H:%M"),0.0,None))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:58","%Y-%m-%d %H:%M"),1.33,None))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),1.35,None))
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:56","%Y-%m-%d %H:%M"),"testsensor",33.33,"Mein Error")
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:57","%Y-%m-%d %H:%M"),"testsensor2",0.0,None)
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:58","%Y-%m-%d %H:%M"),"testsensor2",1.33,None)
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),"testsensor2",1.35,None)
         measurements = self._datastore.get_samples()
         result = ""
         for m in measurements:
@@ -58,17 +58,17 @@ class DBAccesstest(unittest.TestCase):
         self.assertResultByFile(result,"test_addSample.txt")
 		
     def get_samples(self):
-        self._datastore.add_sample(Measurement("testsensor",datetime.datetime.strptime("2013-01-30 23:56","%Y-%m-%d %H:%M"),33.33,"Mein Error"))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:57","%Y-%m-%d %H:%M"),0.0,None))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:58","%Y-%m-%d %H:%M"),1.33,None))
-        self._datastore.add_sample(Measurement("testsensor2",datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),1.35,None))
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:56","%Y-%m-%d %H:%M"),"testsensor",33.33,"Mein Error")
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:57","%Y-%m-%d %H:%M"),"testsensor2",0.0,None)
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:58","%Y-%m-%d %H:%M"),"testsensor2",1.33,None)
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),"testsensor2",1.35,None)
         measurements = self._datastore.get_samples(datetime.datetime.strptime("2013-01-30 23:57","%Y-%m-%d %H:%M"),datetime.datetime.strptime("2013-01-30 23:58","%Y-%m-%d %H:%M"))
         result = ""
         for m in measurements:
             result += str(m) + "\n"
         self.assertResultByFile(result,"test_get_samples.txt")
 
-suite = unittest.defaultTestLoader.loadTestsFromTestCase(DBAccesstest)
+suite = unittest.defaultTestLoader.loadTestsFromTestCase(Datastoretest)
 
 if __name__ == '__main__':
     unittest.TextTestRunner().run(suite)

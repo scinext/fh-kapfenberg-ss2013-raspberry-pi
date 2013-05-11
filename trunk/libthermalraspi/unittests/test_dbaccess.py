@@ -1,8 +1,8 @@
 #!/usr/bin/python
-from databaseaccess.SensorDAO import SensorDAO
-from databaseaccess.MeasurementDAO import MeasurementDAO
-from databaseaccess.Measurement import Measurement
-from databaseaccess.DataStoreSQL import DataStoreSQL
+from libthermalraspi.database.SensorDAO import SensorDAO
+from libthermalraspi.database.MeasurementDAO import MeasurementDAO
+from libthermalraspi.database.Measurement import Measurement
+from libthermalraspi.database.DataStoreSQL import DataStoreSQL
 import datetime
 import unittest
 import sqlite3
@@ -70,7 +70,7 @@ class DBAccesstest(unittest.TestCase):
         self.assertResultByFile(result,"test_ShowMeasurementsWithFilter.txt")
 
     def test_addSample(self):
-        self._datastore.add_sample(Measurement("testsensor",datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),33.33,"Mein Error"))
+        self._datastore.add_sample(datetime.datetime.strptime("2013-01-30 23:59","%Y-%m-%d %H:%M"),"testsensor",33.33,"Mein Error")
         measurements = self._datastore.get_samples()
         result = ""
         for m in measurements:

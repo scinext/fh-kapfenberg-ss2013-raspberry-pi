@@ -1,6 +1,6 @@
 # coding: utf-8
 from libthermalraspi.services.sampleCollector import SampleCollector
-from dataStoreSQLite import DataStoreSQLite
+from libthermalraspi.database.DataStoreSQL import DataStoreSQL
 
 import datetime
 import time
@@ -75,6 +75,6 @@ class ParallelSampleCollector(SampleCollector):
                 _sensorName = type(sensor).__name__
                 
                 'Persistiere Messdaten in DB'
-                DataStoreSQLite.add_sample(datetime.datetime.now(), _sensorName, _sensorTemp.readline(), errorCode)
+                DataStoreSQL.add_sample(datetime.datetime.now(), _sensorName, _sensorTemp.readline(), errorCode)
                 
         pass

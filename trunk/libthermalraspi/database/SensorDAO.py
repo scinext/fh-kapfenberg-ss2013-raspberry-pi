@@ -1,6 +1,6 @@
 import datetime
-from databaseaccess.Sensor import Sensor
-from databaseaccess.MeasurementDAO import MeasurementDAO
+from libthermalraspi.database.Sensor import Sensor
+from libthermalraspi.database.MeasurementDAO import MeasurementDAO
 import sqlite3 
 
 class SensorDAO(Sensor):
