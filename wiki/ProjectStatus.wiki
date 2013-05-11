@@ -86,8 +86,14 @@ syntax_, using the {{{eval}}} statement? The config file would look like this,
 
 {{{
 store = DataStoreInMemory()
-...
 }}}
+
+A couple of unit tests should be written to test several aspects
+
+ * Regular operation of a couple of sensors
+ * Error scenarios:
+   * IOError on a sensor (can be simulated; write a dedicated sensor that always throws)
+   * what else?
 
 *Iteration, loop control*. Unit tests want it to do, say, five rounds
 of acquisition, then stop and examime the result (database or
