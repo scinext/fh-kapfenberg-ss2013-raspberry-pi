@@ -62,3 +62,7 @@ store = DataStoreInMemory()
 }}}
 
 == Temperature Sample Server ==
+
+Done for the network part.
+
+XML needs a little help, should use the {{{DataStore}}} interface.
