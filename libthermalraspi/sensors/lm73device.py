@@ -13,9 +13,6 @@ class LM73Device(Thermometer, I2CDevice):
     Author: HeKo
     """
 
-    def __init__(self, bus, addr):
-        I2CDevice.__init__(self, bus, addr)
-
     def get_temperature(self):
         # select Temperature register
         self.write('\x00')
