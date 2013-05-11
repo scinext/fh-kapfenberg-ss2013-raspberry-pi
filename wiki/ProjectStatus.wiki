@@ -83,9 +83,11 @@ of acquisition, then stop and examime the result (database or
 in-memory). Real life wants something more elaborate: iteration that
 sleeps and does signal handling.
 
-*The real-life final program* will fill a database every n seconds or
-so (a configurable amount of time). It will use a signal handler to
-stop acquisition.
+*The real-life final program* will
+
+ * Fill a database every n seconds or so (a configurable amount of time)
+ * Use a signal handler to stop acquisition.
+ * Use the {{{argparse}}} module to interpret commandline parameters
 
 = Temperature Sample Server =
 
@@ -102,7 +104,8 @@ minor issue :-)
 interface. This gets us rid of the external XML file that is currently
 used.
 
-*The real-life final program* will fullfill requests from a database
-(presumably from the same database that is filled by the acquisition
-program). It provides a "dummy" option for easy operation, for use by
-the Android client developer(s).
+*The real-life final program* will
+
+ * Fullfill requests from a database (presumably from the same database that is filled by the acquisition program)
+ * Provide a "dummy" option for easy operation, for use by the Android client developer(s).
+ * Use the {{{argparse}}} module to interpret commandline parameters
