@@ -20,7 +20,7 @@
 A
 [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
 
-The SQLite3 implementation needs some rework. It currently uses a
+The [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStoreSQLite.py SQLite3 implementation] needs some rework. It currently uses a
 module, {{{DBProvider}}}, which is global. Goal is to
 
  * Instantiate the database connection in the program, right after argument parsing
