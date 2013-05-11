@@ -49,6 +49,7 @@ store = DataStoreInMemory()
 || Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
 || Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
 || ??? || Write iterable that sleeps and uses signal handler ||
+|| ??? || Sensor configuration ||
 || ??? || Write unit tests, using DataStoreInMemory ||
 || ??? || Real-life final _program_ ||
 
@@ -69,6 +70,16 @@ collector = ParallelSampleCollector(
                 },
     )
 ...
+}}}
+
+*Sensor configuration*. What about reading a config file _in Python
+ syntax_, using the {{{eval}}} statement? The config file would look like this,
+
+{{{
+{
+  'th-links-oben': LM73(1, 49),
+  'th-rechts-unten': Proxy('192.168.1.109', 1234),
+}
 }}}
 
 *Unit tests* could create an easier store,
