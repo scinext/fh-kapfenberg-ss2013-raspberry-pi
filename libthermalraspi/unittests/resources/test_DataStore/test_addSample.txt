@@ -1,0 +1,4 @@
+testsensor;2013-01-30 23:56:00;33.33;Mein Error
+testsensor2;2013-01-30 23:59:00;1.35;None
+testsensor2;2013-01-30 23:58:00;1.33;None
+testsensor2;2013-01-30 23:57:00;0.0;None

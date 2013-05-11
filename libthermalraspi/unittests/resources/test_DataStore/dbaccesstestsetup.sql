@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS "sensors";
+DROP TABLE IF EXISTS "measurements";
 
 CREATE  TABLE "main"."sensors" (
 	"id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,
@@ -12,8 +14,3 @@ CREATE TABLE "measurements" (
 	FOREIGN KEY(sensorid) REFERENCES sensors(id),
 	PRIMARY KEY ("sensorid", "timestamp")
 );
-
-INSERT INTO sensors (name) VALUES ('ad7414');
-INSERT INTO sensors (name) VALUES ('hyt221');
-INSERT INTO sensors (name) VALUES ('lm73');
-INSERT INTO sensors (name) VALUES ('tc74');

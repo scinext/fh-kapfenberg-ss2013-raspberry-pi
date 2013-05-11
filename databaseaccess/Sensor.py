@@ -6,7 +6,7 @@ class Sensor:
         self._measures = []
 
     def getName(self):
-        return self._name
+        return str(self._name)
 
     def getId(self):
         return self._id
