@@ -1,80 +1,60 @@
 # coding: utf-8
 from libthermalraspi.services.sampleCollector import SampleCollector
-from libthermalraspi.database.DataStoreSQL import DataStoreSQL
 
 import datetime
-import time
 import os
 
 class ParallelSampleCollector(SampleCollector):
-    __sensorList = []
-    __runState = 0
         
-    def __init__(self):
-        #Nothing to do here
+    def __init__(self, store, sensorList):
+        __store = store
+        if type(sensorList) is dict:
+            __sensorList = sensorList
+        else:
+            print "Parameter sensorList ist kein Dictionary"
         pass
  
-    def configuration(self, sensorList=[] ):
-        """Sammler der Messdaten mit Liste aller abzufragenden
-        Sensoren versorgen.
+    def run(self, looper):
+        """Messungen starten und per externem iterierbarem Objekt
+        (looper) Intervall der Messzyklen festlegen.
         
-        @param sensorList Liste von Sensor-Instanzen
+        @param looper: Iterierbares Objekt/List/...
         """
-        self.__sensorList.extend(sensorList)
-        pass
-    
-    def run(self, timeDelta):
-        """Messungen starten und Zeitintervall zwischen zwei Abfragen
-        der Sensormesswerte in Millisekunden festlegen. Messungen erfolgen, bis stop()
-        aufgerufen wird.
-        
-        @param timeDelta Intervall in Millisekunden zwischen zwei Messungen
-        """
-        self.__runState = 1
-
-        while (self.__runState == 1):
+        for i in looper:
+            yield i
             self.__getAllSensorTemperatures()
-            # Umrechnung timeDelta Mikrosekunden-int-Wert zu Millisekunden f�r die sleep
-            # Bsp.: timedelta = 5 => /1000 => 0,005  ==> interpretiert als Sekunden in sleep
-            sleepTimeInSeconds = datetime.timedelta(0,0,timeDelta).microseconds/1000.0
-            time.sleep(sleepTimeInSeconds)  # Argument ist Wert in Sekunden(-bruchteilen)
-        pass
-    
-    def stop(self):
-        """Messwerterfassung stoppen."""
-        self.__runState = 0
-        pass
-        
-    def getRunstate(self):
-        return self.__runState
         pass
     
     def __getAllSensorTemperatures(self):
         imTheFather = True
-        children = {}   #dictionary sensor:childPid
-        errorCode = 0
+        children = {}   #dictionary sensorName:childPid
         pipein, pipeout = os.pipe()
       
-        for sensor in self.__sensorList:
+        for sensorName, sensorInstance in self.__sensorList.items():
             child = os.fork()
             if child:
-                children[sensor] = child
+                children[sensorName] = child
             else:
                 imTheFather = False
                 os.close(pipein)
-
-                os.write(pipeout, str(sensor.get_temperature() ) + "\n" )
+                
+                try:
+                    returnValue = {'temp' : float(sensorInstance.get_temperature()) }
+                except IOError as e:
+                    #self.__logger.exception("Sensor IOError: %s" % e)
+                    returnValue = {'errorCode' : 1}
+                    pass
+                os.write(pipeout, str(returnValue))
                 
                 os.close(pipeout)
                 os._exit(0)
-         
+
         if imTheFather:
-            _sensorTemp = os.fdopen(pipein)
-            for sensor, childPid in children.items():
+            sensorDict = eval(os.fdopen(pipein), {'temp' : 0.0, 'errorCode' : 0} )
+            for sensorName, childPid in children.items():
                 os.waitpid(childPid, 0)
-                _sensorName = type(sensor).__name__
                 
                 'Persistiere Messdaten in DB'
-                DataStoreSQL.add_sample(datetime.datetime.now(), _sensorName, _sensorTemp.readline(), errorCode)
+                self.__store.add_sample(datetime.datetime.now(), sensorName, sensorDict['temp'], sensorDict['errorCode'])
                 
         pass
