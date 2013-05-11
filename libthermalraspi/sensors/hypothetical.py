@@ -4,8 +4,6 @@ from libthermalraspi.i2c_device import I2CDevice
 import struct
 
 class HypotheticalThermometer(I2CDevice, Thermometer):
-    def __init__(self, bus, addr):
-        I2CDevice.__init__(self, bus, addr)
 
     def get_temperature(self):
         # select register ("temperature register", according to

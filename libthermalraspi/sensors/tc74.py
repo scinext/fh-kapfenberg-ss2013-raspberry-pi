@@ -5,9 +5,6 @@ import struct
 
 class TC74Thermometer (I2CDevice, Thermometer):
 
-	def __init__ (self, bus, addr):
-		I2CDevice.__init__(self, bus, addr)
-
 	def get_temperature(self):
 
 # "temperature register" according to datasheet (DS)
