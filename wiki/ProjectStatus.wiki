@@ -33,7 +33,7 @@ store = DataStoreSQLite(db)
 An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
 for unit tests.
 
-*People*
+*Todo*
 
 || Florian Maderbacher || DataStoreSQLite refactoring ||
 || ??? || DataStoreInMemory ||
@@ -65,7 +65,7 @@ store = DataStoreInMemory()
 ...
 }}}
 
-*People*
+*Todo*
 
 || Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
 || Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
