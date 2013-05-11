@@ -5,7 +5,7 @@ Created on 29.04.2013
 '''
 
 from xml.dom import minidom
-from databaseaccess.Measurement import Measurement
+from libthermalraspi.database.Measurement import Measurement
 
 
 class XmlMeasurementService:

@@ -1,5 +1,5 @@
-from databaseaccess.Measurement import Measurement
-import databaseaccess
+from libthermalraspi.database.Measurement import Measurement
+import libthermalraspi.database
 import sqlite3
 
 class MeasurementDAO(Measurement):
@@ -14,7 +14,7 @@ class MeasurementDAO(Measurement):
         #Speichert das aktuelle Objekt in die Datenbank
         cursor = connection.cursor()
         insertValues = {
-            "sensorid":databaseaccess.SensorDAO.SensorDAO.getSensorId(connection,measurement._sensorname),
+            "sensorid":libthermalraspi.database.SensorDAO.SensorDAO.getSensorId(connection,measurement._sensorname),
             "timestamp": measurement._timestamp,
             "value": measurement._measureVal,
             "errorcode": measurement._errorCode}

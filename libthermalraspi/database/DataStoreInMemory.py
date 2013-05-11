@@ -1,7 +1,8 @@
 import datetime
-from databaseaccess.DataStore import DataStore
+from libthermalraspi.database.DataStore import DataStore
+from libthermalraspi.database.Measurement import Measurement
 
-class InMemoryDataStore(DataStore):
+class DataStoreInMemory(DataStore):
     def __init__(self):
         self._measures = []
 
@@ -12,5 +13,5 @@ class InMemoryDataStore(DataStore):
 					,key=lambda m: m.getTimestamp(),reverse=True) \
 				,key=lambda m: m.getSensorname())
 
-    def add_sample(self,measurement):
-        self._measures.append(measurement)
+    def add_sample(self,timestamp, sensorname, temperatur, status):
+        self._measures.append(Measurement(sensorname, timestamp, temperatur, status))
