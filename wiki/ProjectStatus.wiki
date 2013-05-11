@@ -22,6 +22,14 @@ module, {{{DBProvider}}}, which is global. Goal is to
  * Construct {{{DataStoreSQLite}}} with an existing database connection. This decouples {{{DataStoreSQLite}}} from any concrete database.
  * Use the {{{DataStore}}} object in the remaining parts of the project (acquisition, server, see below).
 
+Like so,
+
+{{{
+db = sqlite3.connect("/var/db/sample.db")
+store = DataStoreSQLite(db)
+...
+}}}
+
 An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
 for unit tests.
 
@@ -35,6 +43,7 @@ Needs testing badly, to be done when database access has become
 easy. Should be re-written soon to be usable like so,
 
 {{{
+...
 store = DataStoreSQL(db)
 collector = ParallelSampleCollector(
     store=store,
@@ -42,6 +51,7 @@ collector = ParallelSampleCollector(
                 "th2": CyclicThermometer((4, 5, 6))
                 },
     )
+...
 }}}
 
 Unit tests could create an easier store, 
