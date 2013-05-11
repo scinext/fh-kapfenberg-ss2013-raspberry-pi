@@ -12,6 +12,13 @@
 
 = Temperature Sample Database =
 
+== Todo ==
+
+|| Florian Maderbacher || DataStoreSQLite refactoring ||
+|| ??? || DataStoreInMemory ||
+
+== Explanation ==
+
 A
 [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
 
@@ -32,11 +39,6 @@ store = DataStoreSQLite(db)
 
 An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
 for unit tests.
-
-*Todo*
-
-|| Florian Maderbacher || DataStoreSQLite refactoring ||
-|| ??? || DataStoreInMemory ||
 
 = Sample Acquisition =
 
