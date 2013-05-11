@@ -35,6 +35,9 @@ for unit tests.
 
 *People*
 
+|| Florian Maderbacher || DataStoreSQLite refactoring ||
+|| ??? || DataStoreInMemory ||
+
 == Sample Acquisition ==
 
 A (parallel) sample collector is in place. It currently has problems
