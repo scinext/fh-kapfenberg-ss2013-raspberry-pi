@@ -15,7 +15,7 @@
 *Todo*
 
 || Florian Maderbacher || DataStoreSQLite refactoring ||
-|| ??? || DataStoreInMemory ||
+|| Florian Maderbacher || DataStoreInMemory (already exists, move into right place) ||
 
 A
 [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
@@ -48,10 +48,10 @@ store = DataStoreInMemory()
 
 || Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
 || Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
-|| ??? || Write iterable that sleeps and uses signal handler ||
-|| ??? || Sensor configuration ||
-|| ??? || Write unit tests, using DataStoreInMemory ||
-|| ??? || Real-life final _program_ ||
+|| Michaela Maierhofer, Bernadette Pecovnik, Robert Pürer || Write iterable that sleeps and uses signal handler ||
+|| Mario Pflegpeter || Read sensor configuration file into dictionary (incl. unit test(s)) ||
+|| Martin Krainer, Markus Koller || Write unit tests for ParallelSampleCollector, using DataStoreInMemory ||
+|| Florian Dulzky || Real-life final _program_ ||
 
 A (parallel) sample collector is in place. It currently has problems
 with the database access, for the reasons mentioned. Needs testing badly, to be done when database access has become
