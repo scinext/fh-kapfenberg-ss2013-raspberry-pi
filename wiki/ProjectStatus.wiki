@@ -73,7 +73,7 @@ collector = ParallelSampleCollector(
 }}}
 
 *Sensor configuration*. What about reading a config file _in Python
- syntax_, using the {{{eval}}} statement? The config file would look like this,
+syntax_, using the {{{eval}}} statement? The config file would look like this,
 
 {{{
 {
@@ -99,6 +99,8 @@ sleeps and does signal handling.
  * Fill a database every n seconds or so (a configurable amount of time)
  * Use a signal handler to stop acquisition.
  * Use the {{{argparse}}} module to interpret commandline parameters
+
+Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/temperature-acquisition.py this] as a starting point.
 
 = Temperature Sample Server =
 
