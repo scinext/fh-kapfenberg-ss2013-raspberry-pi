@@ -96,7 +96,7 @@ A couple of unit tests should be written to test several aspects
    * what else?
 
 *Iteration, loop control*. Unit tests want it to do, say, five rounds
-of acquisition, then stop and examime the result (database or
+of acquisition, then stop and examine the result (database or
 in-memory). Real life wants something more elaborate: iteration that
 sleeps and does signal handling.
 
