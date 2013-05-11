@@ -4,9 +4,7 @@ from libthermalraspi.i2c_device import I2CDevice
 import struct
 
 class AD7414Thermometer(I2CDevice, Thermometer):
-    def __init__(self, bus, addr):
-        I2CDevice.__init__(self, bus, addr)
-
+    
     def get_temperature(self):
         # "temperature register" according to datasheet (DS)
         self.write('\x00')

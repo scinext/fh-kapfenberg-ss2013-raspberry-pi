@@ -6,8 +6,6 @@ import time
 import struct
 
 class Hyt221(I2CDevice, Thermometer, HumiditySensor):
-    def __init__(self, bus, addr):
-        I2CDevice.__init__(self, bus, addr)
 
     def _perform_measurement(self):
         # init -> trigger measurement
