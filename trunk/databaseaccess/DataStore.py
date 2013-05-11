@@ -8,5 +8,5 @@ class DataStore(object):
         pass
 
     @abc.abstractmethod
-    def add_sample(measurement):
+    def add_sample(self, measurement):
         pass
