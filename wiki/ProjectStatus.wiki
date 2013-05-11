@@ -94,6 +94,8 @@ of acquisition, then stop and examime the result (database or
 in-memory). Real life wants something more elaborate: iteration that
 sleeps and does signal handling.
 
+See [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/looper-example.py here] for an example.
+
 *The real-life final program* will
 
  * Fill a database every n seconds or so (a configurable amount of time)
