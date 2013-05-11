@@ -6,4 +6,6 @@
    * Convert the temperature register based on the precision configuration from the "control/status" register
    * Configure the precision (set the "control/status" register)
    Stefan Winkler does some final checking (there are problems setting the precision)
- * *TC74*. 
+ * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-TC74.pdf TC74]*. Done (to be verified).
+ * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-AD741x.pdf AD7414]*. Done (to be verified).
+ * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Protokollbeschreibung_DE.pdf HYT221]*. Done (to be verified).
