@@ -20,9 +20,15 @@ class ParallelSampleCollector(SampleCollector):
         
         @param looper: Iterierbares Objekt/List/...
         """
-        for i in looper:
-            yield i
-            self.__getAllSensorTemperatures()
+        try:
+            iterator = iter(looper)
+        except TypeError:
+            print "Looper nicht iterierbar"
+        else:
+            #Iterieren möglich
+            for i in looper:
+                yield i
+                self.__getAllSensorTemperatures()
         pass
     
     def __getAllSensorTemperatures(self):
