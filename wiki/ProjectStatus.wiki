@@ -9,3 +9,47 @@
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-TC74.pdf TC74]*. Done (to be verified).
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-AD741x.pdf AD7414]*. Done (to be verified).
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Protokollbeschreibung_DE.pdf HYT221]*. Done (to be verified).
+
+== Temperature Sample Database ==
+
+A
+[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py
+{{{DataStore}}} interface] is in place.
+
+The SQLite3 implementation needs some rework. It currently uses a
+module, {{{DBProvider}}}, which is global. Goal is to
+
+ * Instantiate the database connection in the program, right after argument parsing
+ * Construct {{{DataStoreSQLite}}} with an existing database connection. This decouples {{{DataStoreSQLite}}} from any concrete database.
+ * Use the {{{DataStore}}} object in the remaining parts of the project (acquisition, server, see below).
+
+An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
+for unit tests.
+
+
+== Sample Acquisition ==
+
+A (parallel) sample collector is in place. It currently has problems
+with the database access, for the reasons mentioned.
+
+Needs testing badly, to be done when database access has become
+easy. Should be re-written soon to be usable like so,
+
+{{{
+store = DataStoreSQL(db)
+collector = ParallelSampleCollector(
+    store=store,
+    sensorList={"th1": CyclicThermometer((1, 2, 3)), 
+                "th2": CyclicThermometer((4, 5, 6))
+                },
+    )
+}}}
+
+Unit tests could create an easier store, 
+
+{{{
+store = DataStoreInMemory()
+...
+}}}
+
+== Temperature Sample Server ==
