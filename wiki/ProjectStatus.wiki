@@ -2,7 +2,7 @@
 
 == Sensors ==
 
- * *[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/docs/TempSensor-LM73.pdf LM73]*. We have an implementation (by Helmut Kopf and Patrick Gröller) that can
+ * *[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/detail?spec=svn171&r=34 LM73]*. We have an implementation (by Helmut Kopf and Patrick Gröller) that can
    * Convert the temperature register based on the precision configuration from the "control/status" register
    * Configure the precision (set the "control/status" register)
    Stefan Winkler does some final checking (there are problems setting the precision)
