@@ -7,9 +7,9 @@ import os
 class ParallelSampleCollector(SampleCollector):
         
     def __init__(self, store, sensorList):
-        __store = store
+        self.__store = store
         if type(sensorList) is dict:
-            __sensorList = sensorList
+            self.__sensorList = sensorList
         else:
             print "Parameter sensorList ist kein Dictionary"
         pass
