@@ -1,5 +1,7 @@
 = Project Status =
 
+<wiki:toc max_depth="1" />
+
 == Sensors ==
 
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-LM73.pdf LM73]*. We have an implementation (by Helmut Kopf and Patrick Gröller) that can
@@ -67,7 +69,10 @@ store = DataStoreInMemory()
 
 *People*
 
-|| Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above || 
+|| Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
+|| Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
+|| ??? || Write iterable that sleeps and uses signal handler ||
+|| ??? || Write unit tests, using DataStoreInMemory ||
 
 == Temperature Sample Server ==
 
