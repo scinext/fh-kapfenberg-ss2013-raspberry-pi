@@ -84,7 +84,7 @@ class ResponseHandler(threading.Thread):
 
             (sid, sdtf, sdtt) = self.__getDateRange()
             if self.__testmode == True:
-                pathToMockXml = os.path.join(os.path.dirname(__file__),os.pardir, 'unittests','resources'))
+                pathToMockXml = os.path.join(os.path.dirname(__file__),os.pardir, 'unittests','resources')
                 file = open(pathToMockXml+os.sep+'measurement.xml','r')
                 data = file.read()
                 file.close()
