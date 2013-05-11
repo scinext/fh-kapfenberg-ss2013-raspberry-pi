@@ -39,10 +39,10 @@ class ParallelSampleCollector(SampleCollector):
                 os.close(pipein)
                 
                 try:
-                    returnValue = {'temp' : float(sensorInstance.get_temperature()) }
+                    returnValue = {'temp' : float(sensorInstance.get_temperature()), 'errorCode' : 0 }
                 except IOError as e:
                     #self.__logger.exception("Sensor IOError: %s" % e)
-                    returnValue = {'errorCode' : 1}
+                    returnValue = {'temp' : 0, 'errorCode' : 1}
                     pass
                 os.write(pipeout, str(returnValue))
                 
@@ -50,7 +50,7 @@ class ParallelSampleCollector(SampleCollector):
                 os._exit(0)
 
         if imTheFather:
-            sensorDict = eval(os.fdopen(pipein), {'temp' : 0.0, 'errorCode' : 0} )
+            sensorDict = eval(os.fdopen(pipein) )
             for sensorName, childPid in children.items():
                 os.waitpid(childPid, 0)
                 
