@@ -122,3 +122,5 @@ used.
  * Fullfill requests from a database (presumably from the same database that is filled by the acquisition program)
  * Provide a "dummy" option for easy operation, for use by the Android client developer(s).
  * Use the {{{argparse}}} module to interpret commandline parameters
+
+Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/temperature-server.py this] as a starting point.
