@@ -1,8 +1,6 @@
-= Project Status =
-
 <wiki:toc max_depth="1" />
 
-== Sensors ==
+= Sensors =
 
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-LM73.pdf LM73]*. We have an implementation (by Helmut Kopf and Patrick Gröller) that can
    * Convert the temperature register based on the precision configuration from the "control/status" register
@@ -12,7 +10,7 @@
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-AD741x.pdf AD7414]*. Done (to be verified).
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempHumiSensor-HYT221-Protokollbeschreibung_DE.pdf HYT221]*. Done (to be verified).
 
-== Temperature Sample Database ==
+= Temperature Sample Database =
 
 A
 [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
@@ -40,7 +38,7 @@ for unit tests.
 || Florian Maderbacher || DataStoreSQLite refactoring ||
 || ??? || DataStoreInMemory ||
 
-== Sample Acquisition ==
+= Sample Acquisition =
 
 A (parallel) sample collector is in place. It currently has problems
 with the database access, for the reasons mentioned.
@@ -74,7 +72,7 @@ store = DataStoreInMemory()
 || ??? || Write iterable that sleeps and uses signal handler ||
 || ??? || Write unit tests, using DataStoreInMemory ||
 
-== Temperature Sample Server ==
+= Temperature Sample Server =
 
 Done for the network part.
 
