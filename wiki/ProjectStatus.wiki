@@ -12,12 +12,10 @@
 
 = Temperature Sample Database =
 
-== Todo ==
+*Todo*
 
 || Florian Maderbacher || DataStoreSQLite refactoring ||
 || ??? || DataStoreInMemory ||
-
-== Explanation ==
 
 A
 [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
@@ -42,11 +40,20 @@ for unit tests.
 
 = Sample Acquisition =
 
-A (parallel) sample collector is in place. It currently has problems
-with the database access, for the reasons mentioned.
+*Todo*
 
-Needs testing badly, to be done when database access has become
-easy. Should be re-written soon to be usable like so,
+|| Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
+|| Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
+|| ??? || Write iterable that sleeps and uses signal handler ||
+|| ??? || Write unit tests, using DataStoreInMemory ||
+|| ??? || Real-life final _program_ ||
+
+A (parallel) sample collector is in place. It currently has problems
+with the database access, for the reasons mentioned. Needs testing badly, to be done when database access has become
+easy. 
+
+*Getting rid of global database*. Should be re-written soon to be
+usable like so,
 
 {{{
 ...
@@ -60,22 +67,38 @@ collector = ParallelSampleCollector(
 ...
 }}}
 
-Unit tests could create an easier store, 
+*Unit tests* could create an easier store,
 
 {{{
 store = DataStoreInMemory()
 ...
 }}}
 
-*Todo*
+*Iteration, loop control*. Unit tests want it to do, say, five rounds
+of acquisition, then stop and examime the result (database or
+in-memory). Real life wants something more elaborate: iteration that
+sleeps and does signal handling.
 
-|| Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
-|| Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
-|| ??? || Write iterable that sleeps and uses signal handler ||
-|| ??? || Write unit tests, using DataStoreInMemory ||
+*The real-life final program* will fill a database every n seconds or
+so (a configurable amount of time). It will use a signal handler to
+stop acquisition.
 
 = Temperature Sample Server =
 
-Done for the network part.
+*Todo*
 
-XML needs a little help, should use the {{{DataStore}}} interface.
+|| Patrick Gröller || Rewrite XML to *use* {{{DataStore}}} interface; test using {{{DataStoreInMemory}}} ||
+|| ??? || Add signal handling to quit the main loop and drop out of the {{{start()}}} method ||
+|| ??? || Real-life final _program_ ||
+
+*The network part* is basically done. It uses threading, but that's a
+minor issue :-)
+
+*XML* needs a little help, should use the {{{DataStore}}}
+interface. This gets us rid of the external XML file that is currently
+used.
+
+*The real-life final program* will fullfill requests from a database
+(presumably from the same database that is filled by the acquisition
+program). It provides a "dummy" option for easy operation, for use by
+the Android client developer(s).
