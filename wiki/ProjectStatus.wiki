@@ -33,6 +33,7 @@ store = DataStoreSQLite(db)
 An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
 for unit tests.
 
+**People**
 
 == Sample Acquisition ==
 
