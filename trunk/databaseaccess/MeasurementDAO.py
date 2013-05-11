@@ -1,21 +1,23 @@
-
 from databaseaccess.Measurement import Measurement
-from databaseaccess import DBProvider
+import databaseaccess
 import sqlite3
 
 class MeasurementDAO(Measurement):
-    def __init__(self,sensor,timestamp,measureVal,errorCode):
-	    Measurement.__init__(self,sensor,timestamp,measureVal,errorCode)
+    def __init__(self,sensorname,timestamp,measureVal,errorCode):
+	    Measurement.__init__(self,sensorname,timestamp,measureVal,errorCode)
 
-    def insert(self):
+    def insert(self,connection):
+        MeasurementDAO.insertMeasurement(connection,self)
+
+    @staticmethod
+    def insertMeasurement(connection,measurement):
         #Speichert das aktuelle Objekt in die Datenbank
-        connection = DBProvider.getDBConncetion()
         cursor = connection.cursor()
         insertValues = {
-            "sensorid":self._sensor.getId(),
-            "timestamp": self._timestamp,
-            "value": self._measureVal,
-            "errorcode": self._errorCode}
+            "sensorid":databaseaccess.SensorDAO.SensorDAO.getSensorId(connection,measurement._sensorname),
+            "timestamp": measurement._timestamp,
+            "value": measurement._measureVal,
+            "errorcode": measurement._errorCode}
         cursor.execute("INSERT INTO measurements " +
             "(sensorid,timestamp,value,errorcode) " +
             " VALUES (:sensorid,:timestamp,:value,:errorcode)",insertValues)
