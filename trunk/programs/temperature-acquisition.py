@@ -15,3 +15,4 @@ collector = ParallelSampleCollector( store=store, sensors=sensors )
 looper = SleepingLooperWithSignalHandling(INTERVAL)
 
 collector.run(looper)
+# collector.run([1,2,3])
