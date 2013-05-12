@@ -46,8 +46,6 @@ store = DataStoreInMemory()
 
 *Todo*
 
-|| Robert Angerer || rewrite ParallelSampleCollector to use DataStore like in the pseudo code above ||
-|| Robert Angerer || rewrite ParallelSampleCollector to use external iterable in {{{run()}}} method ||
 || Michaela Maierhofer, Bernadette Pecovnik, Robert Pürer || Write iterable that sleeps and uses signal handler ||
 || Mario Pflegpeter || Read sensor configuration file into dictionary (incl. unit test(s)) ||
 || Martin Krainer, Markus Koller || Write unit tests for ParallelSampleCollector, using DataStoreInMemory ||
