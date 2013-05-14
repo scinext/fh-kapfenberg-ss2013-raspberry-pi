@@ -114,7 +114,7 @@ Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/tr
 
 || Patrick Gröller || Rewrite XML to *use* {{{DataStore}}} interface; test using {{{DataStoreInMemory}}} ||
 || Helmut Kopf || Add signal handling to quit the main loop and drop out of the {{{start()}}} method ||
-|| Florian Dulzky || Real-life final _program_ ||
+|| Florian Dulzky, Markus Neubauer || Real-life final _program_ ||
 
 *The network part* is basically done. It uses threading, but that's a
 minor issue :-)
