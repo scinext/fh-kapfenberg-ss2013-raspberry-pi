@@ -1,7 +1,7 @@
 from thermometer import Thermometer
 import os
 
-class CompositeThermometer(Thermometer):
+class CompositeSensor(Thermometer):
     __sensors = []
     
     def __init__(self, sensors=[]):
