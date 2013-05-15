@@ -49,7 +49,7 @@ store = DataStoreInMemory()
 || Michaela Maierhofer, Bernadette Pecovnik, Robert Pürer || Write iterable that sleeps and uses signal handler ||
 || Mario Pflegpeter || Read sensor configuration file into dictionary (incl. unit test(s)) ||
 || Martin Krainer, Markus Koller || Write unit tests for ParallelSampleCollector, using DataStoreInMemory ||
-|| Florian Dulzky || Real-life final _program_ ||
+|| Florian Dulzky, Markus Neubauer || Real-life final _program_ ||
 
 A (parallel) sample collector is in place. It currently has problems
 with the database access, for the reasons mentioned. Needs testing badly, to be done when database access has become
