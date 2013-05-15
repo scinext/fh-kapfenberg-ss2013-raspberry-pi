@@ -16,12 +16,12 @@ while 1:
 
     print("Received connection")
 
-    i = 0
-    while i < 1:
-        #data = clientsocket.recv(1024)
-        ts = time.time()
-        clientsocket.sendall(str(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')) + ": " + str(th.get_temperature()) + "\n")
-        time.sleep(1)
+    data = ""
+    while "QUIT" not in data:
+        data = clientsocket.recv(1024)
+        if "get_temperature" in data:
+            ts = time.time()
+            clientsocket.sendall(str(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')) + ": " + str(th.get_temperature()) + "\n")
     
-    #clientsocket.close()
-    #print("Connection closed")
+    clientsocket.close()
+    print("Connection closed")
