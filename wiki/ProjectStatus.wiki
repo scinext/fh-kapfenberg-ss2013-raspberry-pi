@@ -2,6 +2,11 @@
 
 = Sensors =
 
+*Todo*
+
+|| Stefan Winkler, Martin Steinbauer || Fix LM73 {{{set_resolution()}}} ||
+|| ??? || LM73: {{{get_temperature()}}} does not respect resolution from Control/Status register ||
+
  * *[http://fh-kapfenberg-ss2013-raspberry-pi.googlecode.com/svn/trunk/docs/TempSensor-LM73.pdf LM73]*. We have an implementation (by Helmut Kopf and Patrick Gröller) that can
    * Convert the temperature register based on the precision configuration from the "control/status" register
    * Configure the precision (set the "control/status" register)
