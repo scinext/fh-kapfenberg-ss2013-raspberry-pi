@@ -11,9 +11,10 @@ class ThermoProxy():
         try:
             self._sock.connect((host, port))
         except:
-            print("Can not reach server.")
+            sys.exit("Host unreachable")
     
     def send_msg(self, msg):
+        if msg == "": msg = "EMPTY"
         self._sock.send(msg)
 
     def receive_msg(self):
