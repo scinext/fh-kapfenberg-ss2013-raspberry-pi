@@ -39,9 +39,18 @@ class Stds75(I2CDevice, Thermometer):
         
         self.write('\x00')
         data = self.read(2)
-        msb, lsb = struct.unpack('BB', data)
-        
-	t_raw = ((msb << 8) + lsb)  # convert to 2 Byte Integer
+        t_raw = struct.unpack('>h', data)
+	t_raw = t_raw[0]
+
+#	msb = 0b11110101
+#	lsb = 0b11100000
+#	data = struct.pack('BB', msb, lsb)
+ #       t_raw = struct.unpack('>h', data)
+#	t_raw = t_raw[0]
+#	print t_raw
+	
+        # return  t_raw
+	# t_raw = ((msb << 8) + lsb)  # convert to 2 Byte Integer
 
 	if (res == 0x00):  # 9 bit resolution 0.5 degree
 	    print "res: 0.5"
@@ -58,7 +67,6 @@ class Stds75(I2CDevice, Thermometer):
 	if (res == 0x60):  # l2 bit resolution 0.0625 degree
 	    print "res: 0.0625"
 	    return (t_raw >> 4) * 0.0625
-
 
 
         
