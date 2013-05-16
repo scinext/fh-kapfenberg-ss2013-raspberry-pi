@@ -19,8 +19,9 @@ while 1:
     data = ""
     while "QUIT" not in data:
         data = clientsocket.recv(1024)
+        if len(data) == 0:
+            break
         if "get_temperature" in data:
             clientsocket.sendall(str(th.get_temperature()) + "\n")
-    
     clientsocket.close()
     print("Connection closed")
