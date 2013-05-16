@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 import sys, socket
 
 class ThermoProxy():
@@ -8,8 +10,6 @@ class ThermoProxy():
         
         try:
             self._sock.connect((host, port))
-            server = self._sock.getpeername()[0] + ":" + str(self._sock.getpeername()[1])
-            print("%s connected" % (server));
         except:
             print("Can not reach server.")
     
@@ -22,7 +22,7 @@ class ThermoProxy():
 if __name__ == '__main__':
     default = "127.0.0.1:1024"
     
-    host_str = raw_input("client# <HOST>:<PORT> [%s] " % (default))
+    host_str = raw_input("<HOST>:<PORT> [%s] " % (default))
     
     # use default address if not specified
     if (host_str == ''): host_str = default
@@ -56,7 +56,9 @@ if __name__ == '__main__':
         rcv = tp.receive_msg()
         
         # end program if connection closed by server
-        if not rcv: break
+        if not rcv:
+            print("Connection closed by server.")
+            break
         
         # print the received message of the server
         print(rcv)
