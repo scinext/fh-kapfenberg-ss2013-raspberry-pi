@@ -20,8 +20,7 @@ while 1:
     while "QUIT" not in data:
         data = clientsocket.recv(1024)
         if "get_temperature" in data:
-            ts = time.time()
-            clientsocket.sendall(str(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')) + ": " + str(th.get_temperature()) + "\n")
+            clientsocket.sendall(str(th.get_temperature()) + "\n")
     
     clientsocket.close()
     print("Connection closed")
