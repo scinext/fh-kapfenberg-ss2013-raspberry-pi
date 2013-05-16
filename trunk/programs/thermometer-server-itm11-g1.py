@@ -3,6 +3,10 @@
 import socket, sys, threading
 from libthermalraspi.sensors.simulation import CyclicThermometer
 
+# import drivers
+import libthermalraspi.sensors.itm11_g1_stds75
+import libthermalraspi.sensors.lm73device
+
 class SocketServer():
 	
 	def __init__(self, host="localhost", port=1234, thermometer=None):
@@ -57,7 +61,12 @@ class ClientConnection(threading.Thread):
 HOST = sys.argv[1]
 PORT = int(sys.argv[2])
 
+#get driver from config file
+# demo-config-file: stds75(0, 0x4e)
+driver = eval(file(sys.argv[3]).read(), {'stds75': libthermalraspi.sensors.itm11_g1_stds75.Stds75,
+										 'lm73': libthermalraspi.sensors.lm73device.LM73Device})
+
 if __name__ == '__main__':
-    server = SocketServer(HOST, PORT)
+    server = SocketServer(HOST, PORT, driver)
     server.start()
 
