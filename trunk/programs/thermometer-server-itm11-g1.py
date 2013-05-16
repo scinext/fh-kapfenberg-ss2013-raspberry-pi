@@ -40,6 +40,10 @@ class ClientConnection(threading.Thread):
 			data = ""  # init data
 			while "BYE" not in data:
 				data = self.conn.recv(1024)
+				
+				if len(data) == 0:
+					break
+				
 				print(client + ": " + data)
 					
 				if "HELP" in data:
