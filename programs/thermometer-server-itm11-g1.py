@@ -43,6 +43,8 @@ class ClientConnection(threading.Thread):
 				elif "GET_TEMP" in data:
 					print("Temperature data requested by " + client + ". Sending...")
 					self.conn.sendall(str(self.thermometer.get_temperature()))  # send actual data
+				elif "EMPTY" in data:
+					self.conn.sendall(" ")
 				elif "BYE" in data:
 					pass
 				else:
