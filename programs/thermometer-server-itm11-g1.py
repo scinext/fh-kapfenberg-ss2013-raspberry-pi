@@ -39,10 +39,10 @@ class ClientConnection(threading.Thread):
 				print(client + ": " + data)
 					
 				if "HELP" in data:
-					self.conn.sendall("\n====== COMMANDS ======\nHELP\nGET_TEMP\nBYE\n\n")
+					self.conn.sendall("====== COMMANDS ======\nHELP\nGET_TEMP\nBYE")
 				if "GET_TEMP" in data:
 					print("Temperature data requested by " + client + ". Sending...")
-					self.conn.sendall(str(self.thermometer.get_temperature()) + "\n")  # send actual data
+					self.conn.sendall(str(self.thermometer.get_temperature()))  # send actual data
 			
 			self.conn.close()
 			print(client + " closed connection")
