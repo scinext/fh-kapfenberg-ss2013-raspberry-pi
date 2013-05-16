@@ -40,9 +40,13 @@ class ClientConnection(threading.Thread):
 					
 				if "HELP" in data:
 					self.conn.sendall("====== COMMANDS ======\nHELP\nGET_TEMP\nBYE")
-				if "GET_TEMP" in data:
+				elif "GET_TEMP" in data:
 					print("Temperature data requested by " + client + ". Sending...")
 					self.conn.sendall(str(self.thermometer.get_temperature()))  # send actual data
+				elif "BYE" in data:
+					pass
+				else:
+					self.conn.sendall("Command not found")
 			
 			self.conn.close()
 			print(client + " closed connection")
