@@ -11,6 +11,7 @@ class ThermoProxy(Thermometer):
         
         try:
             self._sock.connect((host, port))
+            self._sock.recv(1024)
         except:
             raise Exception("Host not found.")
     
