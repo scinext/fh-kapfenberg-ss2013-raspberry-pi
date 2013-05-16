@@ -4,7 +4,7 @@ import socket
 class ThermoProxy_ItmG2(Thermometer):
 
     def __init__(self):
-        self.__host = '127.0.0.1'
+        self.__host = '127.0.1.1'
         self.__port = 7000
 
     def get_temperature(self):
