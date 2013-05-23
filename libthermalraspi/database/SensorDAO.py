@@ -75,7 +75,7 @@ class SensorDAO(Sensor):
 
             if not row[2] is None:
                 cSensor.addMeasurement(MeasurementDAO(cSensor.getName(),row[2],row[3],row[4]))
-
+                
         return sensors;
 
     @staticmethod
