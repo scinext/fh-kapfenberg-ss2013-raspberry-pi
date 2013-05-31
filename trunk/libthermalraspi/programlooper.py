@@ -11,6 +11,8 @@ class ProgramLooper:
         self.__stop = False
         
         signal.signal(signal.SIGINT, self.signal_handler)
+        signal.signal(signal.SIGTERM, self.signal_handler)
+        signal.signal(signal.SIGQUIT, self.signal_handler)
         
     def __iter__(self):
         while not self.__stop:
