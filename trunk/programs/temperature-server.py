@@ -39,7 +39,7 @@ else:
     db=sqlite3.connect(options.DBFILE)
     store=DataStoreSQL(db)
 
-sensors = SensorConfigReader(SENSORS).read()
+sensors = SensorConfigReader(options.SENSORS).read()
 collector = ParallelSampleCollector( store=store, sensorList=sensors )
 
 # this is the ominous looping construct that needs to be done:
