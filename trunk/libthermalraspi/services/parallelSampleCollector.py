@@ -27,7 +27,7 @@ class ParallelSampleCollector(SampleCollector):
         else:
             #Iterieren möglich
             for i in looper:
-                yield i
+                yield i # ?????
                 self.__getAllSensorTemperatures()
         pass
     
