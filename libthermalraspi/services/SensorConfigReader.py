@@ -15,13 +15,8 @@ class SensorConfigReader(object):
         self._filePath = defaultPath
         
     def read(self):
-        try:
-            return eval( file( self._filePath ).read(), { 'LM73'   : LM73Device
-                                                         ,'AD7414' : AD7414Thermometer
-                                                         ,'TC74'   : TC74Thermometer
-                                                         ,'Hyt221' : Hyt221
-                                                         ,'Cyclic' : CyclicThermometer } )
-        except IOError as e:
-            print "IOError: %s" % e
-        except Exception as e:
-            print "Unknown error: %s" % e
+        return eval( file( self._filePath ).read(), { 'LM73'   : LM73Device
+                                                      ,'AD7414' : AD7414Thermometer
+                                                      ,'TC74'   : TC74Thermometer
+                                                      ,'Hyt221' : Hyt221
+                                                      ,'Cyclic' : CyclicThermometer } )
