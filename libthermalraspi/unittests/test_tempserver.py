@@ -8,6 +8,7 @@ import libthermalraspi.network.tempserver
 
 import unittest
 import socket
+import os
 
 TEST_REQUEST = """<?xml version="1.0" encoding="utf-8"?>
 <request id="$(id)" from="$(from)" to="$(to)"></request>"""
@@ -29,7 +30,13 @@ class TempServerTest(unittest.TestCase):
         data = sock.recv(4096)
         sock.close()
         print(data)
-        self.assertEqual(data, libthermalraspi.network.tempserver.TEST_RESPONSE.replace("$(id)", sid).replace("$(from)", sf).replace("$(to)", st).encode('UTF-8'))
+        pathToMockXml = os.path.join(os.path.dirname(__file__),os.pardir, 'unittests','resources')
+        print(pathToMockXml)
+        file = open(pathToMockXml+os.sep+'measurement.xml','r')
+        expected = file.read()
+        print(expected)
+        file.close()        
+        self.assertEqual(data, expected.replace("$(id)", sid).replace("$(from)", sf).replace("$(to)", st).encode('UTF-8'))
 
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(TempServerTest)
 
