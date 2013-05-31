@@ -20,15 +20,8 @@ class ParallelSampleCollector(SampleCollector):
         
         @param looper: Iterierbares Objekt/List/...
         """
-        try:
-            iterator = iter(looper)
-        except TypeError:
-            print "Looper nicht iterierbar"
-        else:
-            #Iterieren möglich
-            for i in looper:
-                yield i # ?????
-                self.__getAllSensorTemperatures()
+        for i in looper:
+            self.__getAllSensorTemperatures()
         pass
     
     def __getAllSensorTemperatures(self):
@@ -56,7 +49,7 @@ class ParallelSampleCollector(SampleCollector):
                 os._exit(0)
 
         if imTheFather:
-            sensorDict = eval(os.fdopen(pipein) )
+            sensorDict = eval(os.read(pipein, 1024))
             for sensorName, childPid in children.items():
                 os.waitpid(childPid, 0)
                 
