@@ -11,8 +11,8 @@ from libthermalraspi.sensors.hyt221 import Hyt221
 from libthermalraspi.sensors.simulation import CyclicThermometer
 
 class SensorConfigReader(object):
-    def __init__(self, defaultPath = os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "sensor.cfg") ):
-        self._filePath = defaultPath
+    def __init__(self, filePath ):
+        self._filePath = filePath
         
     def read(self):
         return eval( file( self._filePath ).read(), { 'LM73'   : LM73Device
