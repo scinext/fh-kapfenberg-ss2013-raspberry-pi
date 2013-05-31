@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import abc
 
 """Abstract base class for SampleCollector for gathering
@@ -8,7 +10,7 @@ class SampleCollector(object):
     @abc.abstractmethod
     def __init__(self, store, sensorList = {}):
         """Collector mit Datenspeicher und Dictionary der abzufragender
-        Sensoren übergeben.
+        Sensoren Ã¼bergeben.
         
         @param store: Datenbank-Connection
         @param sensorList: Dictionary SensorName : SensorInstanz

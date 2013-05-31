@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from libthermalraspi.programlooper import ProgramLooper
 
 looper = ProgramLooper(2)

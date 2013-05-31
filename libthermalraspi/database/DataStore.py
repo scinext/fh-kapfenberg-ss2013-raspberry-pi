@@ -4,7 +4,7 @@ class DataStore(object):
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def get_sample(self, fromDatetime, toDatetime):
+    def get_samples(self, fromDatetime, toDatetime):
         """Anzahl von Messwerten eines Zeitraumes aus der Datenbank auslesen.
            Parameter:
            fromDatetime   -- Timestamp, Anfangszeitpunkt der Messwerte
