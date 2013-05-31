@@ -66,6 +66,9 @@ class TempServer(object):
             self.__logger.info("Server stopped...")
             print("Server stopped at " + str(datetime.datetime.now()) + "...")
             
+    ##
+    # Clean up open request handler threads for an
+    # organized exit.
     def dispose(self):
         try:
             self.__logger.info("Server handling signal termination at " + str(datetime.datetime.now()) + "...")
@@ -74,7 +77,10 @@ class TempServer(object):
             self.__logger.info("Signal termination handling done")
         except Exception as e:
             self.__logger.exception("Server handling signal termination failed: %s" %e)
-            
+    
+    ##
+    # Callback function, used to remove finished request handlers
+    # form handlers-list.      
     def __removeHandler(self, handler):                    
         try:
             self.__lock.acquire()                       
@@ -150,6 +156,9 @@ class ResponseHandler(threading.Thread):
             return xml
         return None
     
+##
+# For linux system install a siganl handler for
+# SIGINT and SIGTERM
 def addSignalHandler():
     if platform.system() != "Windows":
         import signal
@@ -157,6 +166,8 @@ def addSignalHandler():
         signal.signal(signal.SIGTERM, terminationHandler)
         print("Signal handler successfully installed")                        
 
+##
+# Handles termination of http-server
 def terminationHandler(signal, frame):
     try:
         print("Server termination signal handled at " + str(datetime.datetime.now()) + "...")
