@@ -10,10 +10,13 @@ import logging
 import os
 import sys
 import datetime
+import platform
 from xml.dom.minidom import parseString
 
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 1234
+
+tempServer = None
 
 def getDefaultLogFile():
     return os.path.join(os.path.dirname(os.path.abspath( __file__ )), "TempServer.log")
@@ -30,7 +33,8 @@ class TempServer(object):
         self.__logger = TempServer.__createLogger(logfile, loglevel)
         self.__testmode = testmode
         self.__logger.info("Server initialized: Host = %s, Port = %s" % (host, port))
-
+        self.__handlers = []
+        self.__lock = threading.Lock()      
 
     def start(self):
         try:
@@ -44,7 +48,9 @@ class TempServer(object):
             while True:
                 conn, _ = self.__sock.accept()
                 print("new connection accepted at " + str(datetime.datetime.now()) + "...")
-                ResponseHandler(conn, self.__logger, self.__testmode).start()
+                handler = ResponseHandler(conn, self.__removeHandler, self.__logger, self.__testmode)
+                self.__handlers.append(handler)
+                handler.start()
 
         except socket.error as e:
             self.__logger.exception("Socket error: %s" % e)
@@ -59,7 +65,28 @@ class TempServer(object):
                 self.__sock.close()
             self.__logger.info("Server stopped...")
             print("Server stopped at " + str(datetime.datetime.now()) + "...")
-
+            
+    def dispose(self):
+        try:
+            self.__logger.info("Server handling signal termination at " + str(datetime.datetime.now()) + "...")
+            for handler in self.__handlers:
+                handler.join()                                       
+            self.__logger.info("Signal termination handling done")
+        except Exception as e:
+            self.__logger.exception("Server handling signal termination failed: %s" %e)
+            
+    def __removeHandler(self, handler):                    
+        try:
+            self.__lock.acquire()                       
+            self.__handlers.remove(handler)            
+            self.__logger.info("Handler successfully removed!")
+        except ValueError as e:            
+            self.__logger.exception("Remove handler failed: %s" %e)
+        except Exception as e:
+            self.__logger.exception("Remove handler failed: %s" %e)
+        finally:
+            self.__lock.release()
+            
     @staticmethod
     def __createLogger(logfile, level = logging.INFO):
         logger = logging.getLogger("tempserver")
@@ -71,9 +98,10 @@ class TempServer(object):
         return logger
 
 class ResponseHandler(threading.Thread):
-    def __init__(self, connection, logger, testmode = False):
+    def __init__(self, connection, donecallback, logger, testmode = False):
         threading.Thread.__init__(self)
         self.__connection = connection
+        self.__donecallback = donecallback
         self.__logger = logger
         self.__testmode = testmode
         self.__logger.info("Request handler invoked: Testmode = " + str(self.__testmode))
@@ -88,8 +116,8 @@ class ResponseHandler(threading.Thread):
                 file = open(pathToMockXml+os.sep+'measurement.xml','r')
                 data = file.read()
                 file.close()
-                dom = parseString(data)
-                self.__connection.send(dom.replace("$(id)", sid).replace("$(from)", sdtf).replace("$(to)", sdtt).encode('UTF-8'))
+                #dom = parseString(data)
+                self.__connection.send(data.replace("$(id)", sid).replace("$(from)", sdtf).replace("$(to)", sdtt).encode('UTF-8'))
             else:
                 # todo...
                 pass
@@ -98,6 +126,7 @@ class ResponseHandler(threading.Thread):
             self.__logger.exception("Response failed by an unexpected error: %s" % e)
         finally:
             self.__connection.close()
+            self.__donecallback(self)
 
     def __getDateRange(self):
         xml = self.__getXml()
@@ -120,6 +149,21 @@ class ResponseHandler(threading.Thread):
             xml = parseString(xmlstr)
             return xml
         return None
+    
+def addSignalHandler():
+    if platform.system() != "Windows":
+        import signal
+        signal.signal(signal.SIGINT, terminationHandler)
+        signal.signal(signal.SIGTERM, terminationHandler)
+        print("Signal handler successfully installed")                        
+
+def terminationHandler(signal, frame):
+    try:
+        print("Server termination signal handled at " + str(datetime.datetime.now()) + "...")
+        if tempServer != None:
+            tempServer.dispose()      
+    finally:
+        sys.exit(0)            
 
 if __name__ == '__main__':
     host = DEFAULT_HOST = "localhost"
@@ -133,5 +177,6 @@ if __name__ == '__main__':
             if len(sys.argv) >= 4:
                 testmode = int(sys.argv[3]) != 0
 
-    server = TempServer(host, port, getDefaultLogFile(), logging.INFO, testmode)
-    server.start()
+    addSignalHandler()
+    tempServer = TempServer(host, port, getDefaultLogFile(), logging.INFO, testmode)
+    tempServer.start()
