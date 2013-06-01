@@ -16,7 +16,7 @@
 
 = Temperature Sample Database =
 
-Done.
+Done (the reader side still to be verified).
 
 We have an [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/database/DataStore.py interface], 
 and both [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/database/DataStoreInMemory.py an in-memory]
