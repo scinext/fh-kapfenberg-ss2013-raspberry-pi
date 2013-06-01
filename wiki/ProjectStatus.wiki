@@ -28,7 +28,7 @@ and [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/tr
 
 || Martin Krainer, Markus Koller || Write unit tests for ParallelSampleCollector, using DataStoreInMemory ||
 
-A [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/parallelSampleCollector.py _parallelized_ (using multiple processes) temperature sample acquisition] is in place.
+A [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/parallelSampleCollector.py parallelized (using multiple processes) temperature sample acquisition] is in place.
 
 A main program does database and sensors setup, and then drives the
 main loop of the acquisition. A [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/programlooper.py Python generator is used to control the loop] and, most important, its termination using a signal handler.
