@@ -66,4 +66,4 @@ Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/tr
 
 *Todo*
 
-|| Ludwig Lindlbauer || Write it ||
+|| Ludwig Lindlbauer || ? ||
