@@ -65,7 +65,15 @@ class TempServer(object):
         
     ##
     # Clean up open request handler threads for an
-    # organized exit.
+    # organized exit:    
+    # 1. Set disposed = True -> Prevent further response handling, all further requests should be skipped
+    # 2. Acquire lock
+    # 3. Copy handler list
+    # 4. Release lock
+    # 5. From this point the dispose flag suppress further request handling (see __realizeResponse)
+    # 6. Iterate over handler list copy and wait until all threads has finished
+    # 7. Close socket
+    # 8. Done
     def dispose(self):
         if self.__disposed == False:
             # From this point the server doesn't handle response any more:
