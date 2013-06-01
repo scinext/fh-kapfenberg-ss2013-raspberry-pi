@@ -61,3 +61,9 @@ used.
  * Use the {{{argparse}}} module to interpret commandline parameters
 
 Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/temperature-server.py this] as a starting point.
+
+= Android App =
+
+*Todo*
+
+|| Ludwig Lindlbauer || Write it ||
