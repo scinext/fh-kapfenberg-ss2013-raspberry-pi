@@ -26,45 +26,12 @@ and [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/tr
 
 *Todo*
 
-|| Michaela Maierhofer, Bernadette Pecovnik, Robert Pürer || Write iterable that sleeps and uses signal handler ||
-|| Mario Pflegpeter || Read sensor configuration file into dictionary (incl. unit test(s)) ||
 || Martin Krainer, Markus Koller || Write unit tests for ParallelSampleCollector, using DataStoreInMemory ||
-|| Florian Dulzky, Markus Neubauer || Real-life final _program_ ||
 
-A (parallel) sample collector is in place. It currently has problems
-with the database access, for the reasons mentioned. Needs testing badly, to be done when database access has become
-easy. 
+A [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/parallelSampleCollector.py _parallelized_ (using multiple processes) temperature sample acquisition] is in place.
 
-*Getting rid of global database*. Should be re-written soon to be
-usable like so,
-
-{{{
-...
-store = DataStoreSQL(db)
-collector = ParallelSampleCollector(
-    store=store,
-    sensorList={"th1": CyclicThermometer((1, 2, 3)), 
-                "th2": CyclicThermometer((4, 5, 6))
-                },
-    )
-...
-}}}
-
-*Sensor configuration*. What about reading a config file _in Python
-syntax_, using the {{{eval}}} statement? The config file would look like this,
-
-{{{
-{
-  'th-links-oben': LM73(1, 49),
-  'th-rechts-unten': Proxy('192.168.1.109', 1234),
-}
-}}}
-
-*Unit tests* could create an easier store,
-
-{{{
-store = DataStoreInMemory()
-}}}
+A main program does database and sensors setup, and then drives the
+main loop of the acquisition. A [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/programlooper.py Python generator is used to control the loop] and, most important, its termination using a signal handler.
 
 A couple of unit tests should be written to test several aspects
 
@@ -72,21 +39,6 @@ A couple of unit tests should be written to test several aspects
  * Error scenarios:
    * IOError on a sensor (can be simulated; write a dedicated sensor that always throws)
    * what else?
-
-*Iteration, loop control*. Unit tests want it to do, say, five rounds
-of acquisition, then stop and examine the result (database or
-in-memory). Real life wants something more elaborate: iteration that
-sleeps and does signal handling.
-
-See [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/looper-example.py here] for an example.
-
-*The real-life final program* will
-
- * Fill a database every n seconds or so (a configurable amount of time)
- * Use a signal handler to stop acquisition.
- * Use the {{{argparse}}} module to interpret commandline parameters
-
-Use [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/temperature-acquisition.py this] as a starting point.
 
 = Temperature Sample Server =
 
