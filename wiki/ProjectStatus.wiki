@@ -16,35 +16,9 @@
 
 = Temperature Sample Database =
 
-*Todo*
-
-|| Florian Maderbacher || DataStoreSQLite refactoring ||
-|| Florian Maderbacher || DataStoreInMemory (already exists, move into right place) ||
-
-A
-[http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStore.py DataStore interface] is in place.
-
-The [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/services/dataStoreSQLite.py SQLite3 implementation] needs some rework. It currently uses a
-module, {{{DBProvider}}}, which is global. Goal is to
-
- * Instantiate the database connection in the program, right after argument parsing
- * Construct {{{DataStoreSQLite}}} with an existing database connection. This decouples {{{DataStoreSQLite}}} from any concrete database.
- * Use the {{{DataStore}}} object in the remaining parts of the project (acquisition, server, see below).
-
-Like so,
-
-{{{
-db = sqlite3.connect("/var/db/sample.db")
-store = DataStoreSQLite(db)
-...
-}}}
-
-An in-memory {{{DataStore}}} incarnation is upcoming, we will use it
-for unit tests.
-
-{{{
-store = DataStoreInMemory()
-}}}
+We have an [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/database/DataStore.py interface], 
+and both [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/database/DataStoreInMemory.py an in-memory]
+and [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/database/DataStoreSQL.py a SQL] implementation. The latter uses [http://www.python.org/dev/peps/pep-0249/ Python's DBAPI2] which decouples it from any concrete database. In the project, SQLite3 is used as a database.
 
 = Sample Acquisition =
 
