@@ -44,15 +44,16 @@ A couple of unit tests are still to be written to test several aspects such as
 
 *Todo*
 
-|| Patrick Gröller || Rewrite XML to *use* {{{DataStore}}} interface; test using {{{DataStoreInMemory}}} ||
+|| Patrick Gröller || Restructure XML protocol part and server to let one _assemble_ the software (see below) ||
 || Helmut Kopf || Review the callback mechanism where threads are (un)registered (locking issues) ||
 || Florian Dulzky, Markus Neubauer || Real-life final _program_ ||
 
-*The network part* is basically done. The [code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/network/tempserver.py server class] is parallel and handles each command in a dedicated thread.
+*The network part* is basically done. The [code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/libthermalraspi/network/tempserver.py server class] is parallel and handles each command in a dedicated thread. There are still some locking issues that need to be resolved.
 
-*XML* needs a little help, should use the {{{DataStore}}}
-interface. This gets us rid of the external XML file that is currently
-used.
+*The protocol part* needs rework. Should use the {{{DataStore}}}
+interface to collect data. Currently, it uses a hardcoded list of
+return samples; this will be done using a {{{DataStoreInMemory}}} ---
+which is passed in from the main program in the "dummy" mode (very much like the [http://code.google.com/p/fh-kapfenberg-ss2013-raspberry-pi/source/browse/trunk/programs/temperature-acquisition.py acquisition program]). The real-life {{{DataStoreSQL}}} will also be passwd in by the main program.
 
 *The real-life final program* will
 
