@@ -34,7 +34,8 @@ class TempServer(object):
         self.__testmode = testmode
         self.__logger.info("Server initialized: Host = %s, Port = %s" % (host, port))
         self.__handlers = []
-        self.__lock = threading.Lock()      
+        self.__lock = threading.Lock()
+        self.__disposed = False      
 
     def start(self):
         try:
@@ -48,10 +49,7 @@ class TempServer(object):
             while True:
                 conn, _ = self.__sock.accept()
                 print("new connection accepted at " + str(datetime.datetime.now()) + "...")
-                handler = ResponseHandler(conn, self.__removeHandler, self.__logger, self.__testmode)
-                self.__handlers.append(handler)
-                handler.start()
-
+                self.__realizeResponse(conn)
         except socket.error as e:
             self.__logger.exception("Socket error: %s" % e)
         except socket.herror as e:
@@ -61,27 +59,78 @@ class TempServer(object):
         except Exception as e:
             self.__logger.exception("Unexpected server error: %s" % e)
         finally:
-            if self.__sock != None:
-                self.__sock.close()
+            self.__closeSocket()
             self.__logger.info("Server stopped...")
-            print("Server stopped at " + str(datetime.datetime.now()) + "...")
-            
+            print("Server stopped at " + str(datetime.datetime.now()) + "...")                        
+        
     ##
     # Clean up open request handler threads for an
     # organized exit.
     def dispose(self):
+        if self.__disposed == False:
+            # From this point the server doesn't handle response any more:
+            # __realizeResponse considers __disposed and skip further requests
+            self.__disposed = True
+            
+            try:
+                self.__logger.info("Server handling signal termination at " + str(datetime.datetime.now()) + "...")
+                # Get open handlers as copy
+                # Since each thread removes itself by callback function, the original handlers list
+                # will be modified during following for-loop: Enumerate over a list that changes during
+                # the iterations is a bad idea...
+                # Since the remove handler callback acquires a lock it's not possible to lock the whole iteration in#
+                # dispose -> Deadlock...
+                # Solution: Since the handlers list can only shrink (no further requests will be handled) we can use a copy 
+                # of current handler list.                
+                handlers = self.__getHandlersAsCopy()
+                for handler in handlers:
+                    # Wait until each thread has finished
+                    handler.join()                                       
+                self.__logger.info("Signal termination handling done")
+            except Exception as e:
+                self.__logger.exception("Server handling signal termination failed: %s" %e)
+            finally:
+                # close socket in each case
+                self.__closeSocket()
+                
+    def __closeSocket(self):
         try:
-            self.__logger.info("Server handling signal termination at " + str(datetime.datetime.now()) + "...")
-            for handler in self.__handlers:
-                handler.join()                                       
-            self.__logger.info("Signal termination handling done")
+            if self.__sock != None:
+                self.__sock.close()
+                self.__sock = None
         except Exception as e:
-            self.__logger.exception("Server handling signal termination failed: %s" %e)
+            self.__logger.exception("Close socket failed: %s" %e)
+            
+    def __realizeResponse(self, connection):
+        try:
+            self.__lock.acquire()
+            # Consider dispose state:
+            # if intermediately called disposed -> skip response and close connection
+            if self.__disposed == False:
+                handler = ResponseHandler(connection, self.__removeHandler, self.__logger, self.__testmode)
+                self.__handlers.append(handler)
+                handler.start()
+            else:
+                connection.close()
+        except Exception as e:
+            self.__logger.exception("Unexpected error during realizing response: %s" % e)
+        finally:
+            self.__lock.release()
     
+    def __getHandlersAsCopy(self):
+        handlers = []
+        
+        try:
+            self.__lock.acquire()
+            handlers = list(self.__handlers)            
+        finally:
+            self.__lock.release()
+            
+        return handlers    
     ##
     # Callback function, used to remove finished request handlers
     # form handlers-list.      
-    def __removeHandler(self, handler):                    
+    def __removeHandler(self, handler):                        
         try:
             self.__lock.acquire()                       
             self.__handlers.remove(handler)            
