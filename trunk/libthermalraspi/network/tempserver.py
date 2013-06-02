@@ -12,6 +12,8 @@ import sys
 import datetime
 import platform
 from xml.dom.minidom import parseString
+from libthermalraspi.services.xml_measurement_service import XmlMeasurementService
+from libthermalraspi.database import DataStoreInMemory
 
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 1234
@@ -26,16 +28,16 @@ class TempServer(object):
     """
     Temperature server
     """
-    def __init__(self, host = "localhost", port = 1234, logfile = getDefaultLogFile(), loglevel = logging.INFO, testmode = False):
+    def __init__(self, host = "localhost", port = 1234, datastore,logfile = getDefaultLogFile(), loglevel = logging.INFO):
         self.__sock = None
         self.__host = host
         self.__port = port
+        self.__store= datastore
         self.__logger = TempServer.__createLogger(logfile, loglevel)
-        self.__testmode = testmode
         self.__logger.info("Server initialized: Host = %s, Port = %s" % (host, port))
         self.__handlers = []
         self.__lock = threading.Lock()
-        self.__disposed = False      
+        self.__disposed = False
 
     def start(self):
         try:
@@ -61,11 +63,11 @@ class TempServer(object):
         finally:
             self.__closeSocket()
             self.__logger.info("Server stopped...")
-            print("Server stopped at " + str(datetime.datetime.now()) + "...")                        
-        
+            print("Server stopped at " + str(datetime.datetime.now()) + "...")
+
     ##
     # Clean up open request handler threads for an
-    # organized exit:    
+    # organized exit:
     # 1. Set disposed = True -> Prevent further response handling, all further requests should be skipped
     # 2. Acquire lock
     # 3. Copy handler list
@@ -79,7 +81,7 @@ class TempServer(object):
             # From this point the server doesn't handle response any more:
             # __realizeResponse considers __disposed and skip further requests
             self.__disposed = True
-            
+
             try:
                 self.__logger.info("Server handling signal termination at " + str(datetime.datetime.now()) + "...")
                 # Get open handlers as copy
@@ -88,19 +90,19 @@ class TempServer(object):
                 # the iterations is a bad idea...
                 # Since the remove handler callback acquires a lock it's not possible to lock the whole iteration in#
                 # dispose -> Deadlock...
-                # Solution: Since the handlers list can only shrink (no further requests will be handled) we can use a copy 
-                # of current handler list.                
+                # Solution: Since the handlers list can only shrink (no further requests will be handled) we can use a copy
+                # of current handler list.
                 handlers = self.__getHandlersAsCopy()
                 for handler in handlers:
                     # Wait until each thread has finished
-                    handler.join()                                       
+                    handler.join()
                 self.__logger.info("Signal termination handling done")
             except Exception as e:
                 self.__logger.exception("Server handling signal termination failed: %s" %e)
             finally:
                 # close socket in each case
                 self.__closeSocket()
-                
+
     def __closeSocket(self):
         try:
             if self.__sock != None:
@@ -108,14 +110,14 @@ class TempServer(object):
                 self.__sock = None
         except Exception as e:
             self.__logger.exception("Close socket failed: %s" %e)
-            
+
     def __realizeResponse(self, connection):
         try:
             self.__lock.acquire()
             # Consider dispose state:
             # if intermediately called disposed -> skip response and close connection
             if self.__disposed == False:
-                handler = ResponseHandler(connection, self.__removeHandler, self.__logger, self.__testmode)
+                handler = ResponseHandler(connection, self.__removeHandler, self.__logger,self.__store)
                 self.__handlers.append(handler)
                 handler.start()
             else:
@@ -124,32 +126,32 @@ class TempServer(object):
             self.__logger.exception("Unexpected error during realizing response: %s" % e)
         finally:
             self.__lock.release()
-    
+
     def __getHandlersAsCopy(self):
         handlers = []
-        
+
         try:
             self.__lock.acquire()
-            handlers = list(self.__handlers)            
+            handlers = list(self.__handlers)
         finally:
             self.__lock.release()
-            
-        return handlers    
+
+        return handlers
     ##
     # Callback function, used to remove finished request handlers
-    # form handlers-list.      
-    def __removeHandler(self, handler):                        
+    # form handlers-list.
+    def __removeHandler(self, handler):
         try:
-            self.__lock.acquire()                       
-            self.__handlers.remove(handler)            
+            self.__lock.acquire()
+            self.__handlers.remove(handler)
             self.__logger.info("Handler successfully removed!")
-        except ValueError as e:            
+        except ValueError as e:
             self.__logger.exception("Remove handler failed: %s" %e)
         except Exception as e:
             self.__logger.exception("Remove handler failed: %s" %e)
         finally:
             self.__lock.release()
-            
+
     @staticmethod
     def __createLogger(logfile, level = logging.INFO):
         logger = logging.getLogger("tempserver")
@@ -161,29 +163,23 @@ class TempServer(object):
         return logger
 
 class ResponseHandler(threading.Thread):
-    def __init__(self, connection, donecallback, logger, testmode = False):
+    def __init__(self, connection, donecallback, logger, datastore):
         threading.Thread.__init__(self)
         self.__connection = connection
         self.__donecallback = donecallback
         self.__logger = logger
-        self.__testmode = testmode
-        self.__logger.info("Request handler invoked: Testmode = " + str(self.__testmode))
+        self.__store = datastore
 
     def run(self):
         try:
             self.__logger.info("Response requested...")
 
             (sid, sdtf, sdtt) = self.__getDateRange()
-            if self.__testmode == True:
-                pathToMockXml = os.path.join(os.path.dirname(__file__),os.pardir, 'unittests','resources')
-                file = open(pathToMockXml+os.sep+'measurement.xml','r')
-                data = file.read()
-                file.close()
-                #dom = parseString(data)
-                self.__connection.send(data.replace("$(id)", sid).replace("$(from)", sdtf).replace("$(to)", sdtt).encode('UTF-8'))
-            else:
-                # todo...
-                pass
+            measurementSamples = self.__store.get_samples(sdtf,sdtt)
+            xmlService = XmlMeasurementService(measurementSamples)
+            responseData = xmlService.toXml();
+
+            self.__connection.send(responseData.replace("$(id)", sid).replace("$(from)", sdtf).replace("$(to)", sdtt).encode('UTF-8'))
 
         except Exception as e:
             self.__logger.exception("Response failed by an unexpected error: %s" % e)
@@ -212,7 +208,7 @@ class ResponseHandler(threading.Thread):
             xml = parseString(xmlstr)
             return xml
         return None
-    
+
 ##
 # For linux system install a siganl handler for
 # SIGINT and SIGTERM
@@ -221,7 +217,7 @@ def addSignalHandler():
         import signal
         signal.signal(signal.SIGINT, terminationHandler)
         signal.signal(signal.SIGTERM, terminationHandler)
-        print("Signal handler successfully installed")                        
+        print("Signal handler successfully installed")
 
 ##
 # Handles termination of http-server
@@ -229,22 +225,22 @@ def terminationHandler(signal, frame):
     try:
         print("Server termination signal handled at " + str(datetime.datetime.now()) + "...")
         if tempServer != None:
-            tempServer.dispose()      
+            tempServer.dispose()
     finally:
-        sys.exit(0)            
+        sys.exit(0)
 
 if __name__ == '__main__':
     host = DEFAULT_HOST = "localhost"
     port = DEFAULT_PORT = 1234
-    testmode = False
+    store = DataStoreInMemory()
 
     if len(sys.argv) >= 2:
         host = str(sys.argv[1])
         if len(sys.argv) >= 3:
             port = int(sys.argv[2])
             if len(sys.argv) >= 4:
-                testmode = int(sys.argv[3]) != 0
+                store = int(sys.argv[3]) != 0
 
     addSignalHandler()
-    tempServer = TempServer(host, port, getDefaultLogFile(), logging.INFO, testmode)
+    tempServer = TempServer(host, port, getDefaultLogFile(), logging.INFO, store)
     tempServer.start()

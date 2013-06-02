@@ -6,18 +6,30 @@ import unittest
 
 class XmlMeasurementServiceTest(unittest.TestCase):
     def test_toXml(self):
-        file = open(os.path.dirname(__file__)+os.sep+'resources'+os.sep+'measurement.xml','r')
+        file = open(os.path.dirname(__file__)+os.sep+'resources'+os.sep+'test_xmlService'+os.sep+'measurement.xml','r')
         data = file.read()
         file.close()
         dom = parseString(data)
         expectedOutput =dom.toxml(encoding='utf-8')[:38]+ os.linesep + dom.toxml(encoding='utf-8')[38:]+ os.linesep
 
 
-        dataList =[MockObject(MockSensor("Strawberry"),1367168460,20.12,0),
-                   MockObject(MockSensor("Raspberry"),1367168460,30,0),
-                   MockObject(MockSensor("Banana"),1367168467,27.132,1),
-                   MockObject(MockSensor("Blackberry"),1367168461,27.132,0)]
+        dataList =[MockObject(MockSensor("Strawberry"),"2013-04-30 08:03:38",20.12,0),
+                   MockObject(MockSensor("Raspberry"),"2013-05-31 09:03:38",30,0),
+                   MockObject(MockSensor("Banana"),"2013-04-30 08:03:38",27.132,1),
+                   MockObject(MockSensor("Blackberry"),"2013-05-31 09:03:38",27.132,0)]
         xmlService = XmlMeasurementService(dataList)
+        self.assertEqual(expectedOutput, xmlService.toXml())
+        pass
+
+    def test_toXmlWithFailure(self):
+        file = open(os.path.dirname(__file__)+os.sep+'resources'+os.sep+'test_xmlService'+os.sep+'errorMeasurement.xml','r')
+        data = file.read()
+        file.close()
+        dom = parseString(data)
+        expectedOutput =dom.toxml(encoding='utf-8')[:38]+ os.linesep + dom.toxml(encoding='utf-8')[38:]+ os.linesep
+
+        xmlService = XmlMeasurementService([""])
+
         self.assertEqual(expectedOutput, xmlService.toXml())
         pass
 
