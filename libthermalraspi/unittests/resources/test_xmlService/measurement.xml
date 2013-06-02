@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<response from="$(from)" id="$(id)" to="$(to)">
+	<status error="ok"/>
+	<samples>
+		<sample sensorname="Strawberry" status="0" temperature="20.12" timestamp="2013-04-30 08:03:38"/>
+		<sample sensorname="Raspberry" status="0" temperature="30" timestamp="2013-05-31 09:03:38"/>
+		<sample sensorname="Banana" status="1" temperature="27.132" timestamp="2013-04-30 08:03:38"/>
+		<sample sensorname="Blackberry" status="0" temperature="27.132" timestamp="2013-05-31 09:03:38"/>
+	</samples>
+</response>
