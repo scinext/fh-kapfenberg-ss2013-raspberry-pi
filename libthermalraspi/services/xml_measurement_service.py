@@ -41,6 +41,6 @@ class XmlMeasurementService:
             responseStatus.setAttribute('error','overflow')
 
 
-        print doc.toprettyxml(encoding='utf-8')
+        #print doc.toprettyxml(encoding='utf-8')
         return doc.toprettyxml(encoding='utf-8')
         pass

@@ -233,6 +233,7 @@ if __name__ == '__main__':
     host = DEFAULT_HOST = "localhost"
     port = DEFAULT_PORT = 1234
     store = DataStoreInMemory()
+    store.initSomeTestData()
 
     if len(sys.argv) >= 2:
         host = str(sys.argv[1])
