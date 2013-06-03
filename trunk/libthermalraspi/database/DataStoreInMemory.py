@@ -15,3 +15,9 @@ class DataStoreInMemory(DataStore):
 
     def add_sample(self,timestamp, sensorname, temperatur, status):
         self._measures.append(Measurement(sensorname, timestamp, temperatur, status))
+
+    def initSomeTestData(self):
+        self.add_sample(datetime.datetime.strptime("2013-01-30 23:57:38","%Y-%m-%d %H:%M:%S"),"Strawberry",20.12,0)
+        self.add_sample(datetime.datetime.strptime("2013-01-30 23:57:37","%Y-%m-%d %H:%M:%S"),"Raspberry",30.0,0)
+        self.add_sample(datetime.datetime.strptime("2013-01-30 23:58:36","%Y-%m-%d %H:%M:%S"),"Banana",27.132,1)
+        self.add_sample(datetime.datetime.strptime("2013-01-30 23:59:35","%Y-%m-%d %H:%M:%S"),"Blackberry",27.132,0)

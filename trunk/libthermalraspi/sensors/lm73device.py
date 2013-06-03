@@ -10,7 +10,7 @@ from libthermalraspi.sensors.thermometer import Thermometer
 # datasheet specs.
 class LM73Device(Thermometer, I2CDevice):
     """
-    Author: HeKo
+    Author: HeKo, PatGro
     """
 
     def get_temperature(self):

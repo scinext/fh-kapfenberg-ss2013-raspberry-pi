@@ -1,8 +1,7 @@
 class Measurement:
     def __init__(self,sensorname,timestamp,measureVal,errorCode):
         assert type(sensorname) is str
-		
-        #[Sensor]-Objekt
+
         self._sensorname = sensorname
         self._timestamp = timestamp
         self._measureVal = measureVal
