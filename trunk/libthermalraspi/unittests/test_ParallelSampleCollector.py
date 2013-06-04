@@ -1,6 +1,5 @@
-
-# 04.06.: File noch in Arbeit!
-
+# Team: Martin Krainer, Markus Koller
+# File noch in Arbeit
 
 from libthermalraspi.sensors.simulation_sensorstub import SensorStub
 from libthermalraspi.sensors.storemock import StoreMock
@@ -10,32 +9,29 @@ import unittest
 
 class ParallelSampleCollectorTest(unittest.TestCase):
     def test__parallel(self):
-        # Setup-Phase
+        # Setup
 		# Liste mit Testmessungen
-		# measurements = [ 1, 2, 5, -9, -6 ]
+		measurements = [ 1, 2, 5, -9, -6 ]
  
 		# Sensor-Stub anlegen
-		# sensor = SensorStub(measurements)
+		sensor = SensorStub(measurements)
  
 		# Store-Mock anlegen
-		# store = StoreMock()
+		store = StoreMock()
  
 		# Dictionary aus Sensoren erzeugen (In diesem Fall nur ein Eintrag...)
-		# sensors = { "test-sensor1" : sensor  }
- 
+		sensorList = { "test-sensor1" : sensor }
  
 		# Exercise-Phase:
-		# collector = ParallelSampleCollector(store, sensors)
+		collector = ParallelSampleCollector(store, sensors)
 		#collector.run...
  
- 
- 
-		# Verify-Phase:
+		# Verify TODO:
 		# Jetzt müssen alle Werte von measurements in store sein...
-		# Wenn ja -> Test OK
+		# Wenn ja -> Test OK	
 
-#suite = unittest.defaultTestLoader.loadTestsFromTestCase(ParallelSampleCollectorTest)
+suite = unittest.defaultTestLoader.loadTestsFromTestCase(ParallelSampleCollectorTest)
 
-#if __name__ == '__main__':
-    #unittest.TextTestRunner().run(suite)
-    #pass
+if __name__ == '__main__':
+    unittest.TextTestRunner().run(suite)
+    pass
