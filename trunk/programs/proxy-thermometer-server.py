@@ -1,19 +1,19 @@
 #! /usr/bin/python
 
 import socket, sys, threading
-from libthermalraspi.sensors.simulation import CyclicThermometer
 
 # import drivers
-import libthermalraspi.sensors.itm11_g1_stds75
+import libthermalraspi.sensors.stds75
 import libthermalraspi.sensors.lm73device
+import libthermalraspi.sensors.simulation
 
 class SocketServer():
 	
-	def __init__(self, host="localhost", port=1234, thermometer=None):
+	def __init__(self, host, port, thermometer):
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.sock.bind((host, port))
 		self.sock.listen(1)
-		self.thermometer = thermometer if thermometer else CyclicThermometer([2, 3.5, 4])
+		self.thermometer = thermometer
 
 	def start(self):
 		print("Temperature Server started...")
@@ -66,11 +66,12 @@ HOST = sys.argv[1]
 PORT = int(sys.argv[2])
 
 #get driver from config file
-# demo-config-file: stds75(0, 0x4e)
-driver = eval(file(sys.argv[3]).read(), {'stds75': libthermalraspi.sensors.itm11_g1_stds75.Stds75,
-										 'lm73': libthermalraspi.sensors.lm73device.LM73Device})
+# demo-config-file: STDS75(0, 0x4e)
+DRIVER = eval(file(sys.argv[3]).read(), {'STDS75': libthermalraspi.sensors.stds75.Stds75,
+                                         'LM73': libthermalraspi.sensors.lm73device.LM73Device,
+                                         'Cyclic': libthermalraspi.sensors.simulation.CyclicThermometer})
 
 if __name__ == '__main__':
-    server = SocketServer(HOST, PORT, driver)
+    server = SocketServer(HOST, PORT, DRIVER)
     server.start()
 
