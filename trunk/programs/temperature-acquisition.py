@@ -9,20 +9,28 @@ from libthermalraspi.database.DataStoreSQL import DataStoreSQL
 from optparse import OptionParser
 import sqlite3
 
-# instantiate TempServer as see fit, and run it
 parser = OptionParser()
 parser.add_option("-f", "--dbfile", 
-                  action="store", type="string", dest="DBFILE", default="/tmp/some.db", help="used sqlite file name (default=/tmp/some.db)")
+                  action="store", type="string", dest="DBFILE",
+                  default="/tmp/some.db",
+                  help="used sqlite file name (default=/tmp/some.db)")
 parser.add_option("-s", "--sensors", 
-                  action="store", type="string", dest="SENSORS", default="/tmp/sensors.cfg", help="sensor config file path (default=/tmp/sensors.cfg)")
+                  action="store", type="string", dest="SENSORS",
+                  default="/tmp/sensors.cfg",
+                  help="sensor config file path (default=/tmp/sensors.cfg)")
 parser.add_option("-i", "--interval",
-                  action="store", type="int", dest="INTERVAL", default=3, help="used interval in seconds(default=3)")
+                  action="store", type="int", dest="INTERVAL",
+                  default=3,
+                  help="used interval in seconds(default=3)")
 parser.add_option("-d", "--dummy",
-                  action="store_true", dest="DUMMY", default=False, help="dummy usage (default=False)")
+                  action="store_true", dest="DUMMY",
+                  default=False,
+                  help="dummy usage (default=False)")
 
 (options, args) = parser.parse_args()
 
-print("Config: dummy=%s, dbfile=%s, interval=%s, sensorconfig=%s" % (options.DUMMY, options.DBFILE, options.INTERVAL, options.SENSORS))
+print("Config: dummy=%s, dbfile=%s, interval=%s, sensorconfig=%s" % \
+      (options.DUMMY, options.DBFILE, options.INTERVAL, options.SENSORS))
 
 if options.DUMMY:
     store = DataStoreInMemory()
@@ -37,6 +45,3 @@ collector = ParallelSampleCollector( store=store, sensorList=sensors )
 looper = ProgramLooper(options.INTERVAL)
 
 collector.run(looper)
-# collector.run([1,2,3])
-    
-
