@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, socket
+import socket
 from sensors.thermometer import Thermometer
 
 class ThermoProxy(Thermometer):
