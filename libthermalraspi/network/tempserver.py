@@ -28,7 +28,7 @@ class TempServer(object):
     """
     Temperature server
     """
-    def __init__(self, host = "localhost", port = 1234, datastore,logfile = getDefaultLogFile(), loglevel = logging.INFO):
+    def __init__(self, host, port, datastore ,logfile, loglevel):
         self.__sock = None
         self.__host = host
         self.__port = port
@@ -155,10 +155,14 @@ class TempServer(object):
     @staticmethod
     def __createLogger(logfile, level = logging.INFO):
         logger = logging.getLogger("tempserver")
-        fhdlr = logging.FileHandler(logfile)
-        formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        fhdlr.setFormatter(formatter)
-        logger.addHandler(fhdlr)
+        if logfile is None:
+            pass
+        else:
+            
+            fhdlr = logging.FileHandler(logfile)
+            formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+            fhdlr.setFormatter(formatter)
+            logger.addHandler(fhdlr)
         logger.setLevel(level)
         return logger
 
