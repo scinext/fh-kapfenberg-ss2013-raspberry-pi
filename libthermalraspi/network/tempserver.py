@@ -179,6 +179,8 @@ class ResponseHandler(threading.Thread):
             self.__logger.info("Response requested...")
 
             (sid, sdtf, sdtt) = self.__getDateRange()
+            sdtf = datetime.datetime.strptime(sdtf, '%Y-%m-%d %H:%M:%S')
+            sdtt = datetime.datetime.strptime(sdtt, '%Y-%m-%d %H:%M:%S')            
             measurementSamples = self.__store.get_samples(sdtf,sdtt)
             xmlService = XmlMeasurementService(measurementSamples)
             responseData = xmlService.toXml();
