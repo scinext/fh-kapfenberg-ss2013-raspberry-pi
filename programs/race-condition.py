@@ -4,6 +4,13 @@ import threading
 import time
 import os
 
+# --------------------------------------------------------------------
+# WARNING: THIS PROGRAM IS A DEMONSTRATION OF SOME OF THE REALLY BAD
+# (BUT, SADLY, POPULAR) PRACTICES OF INTER-THREAD COMMUNICATION. DON'T
+# EVER COPY FROM IT!!!
+# --------------------------------------------------------------------
+
+
 # items are produced by one thread, and consumed by another.
 # items are big, and stored in a database, indexed by their ID.
 database = {}
@@ -13,13 +20,8 @@ database = {}
 # the database.
 queue = []
 
-lock = threading.Lock()
-
 producer_interval = 1
 consumer_interval = 1
-
-with lock:
-    print 'xxx'
 
 class Producer(threading.Thread):
     def run(self):
