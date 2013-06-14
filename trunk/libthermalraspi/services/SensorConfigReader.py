@@ -10,6 +10,7 @@ from libthermalraspi.sensors.tc74 import TC74Thermometer
 from libthermalraspi.sensors.hyt221 import Hyt221
 from libthermalraspi.sensors.simulation import CyclicThermometer
 from libthermalraspi.sensors.thermo_proxy_itmG2 import ThermoProxy_ItmG2
+from libthermalraspi.sensors.thermo_proxy_itmG1 import ThermoProxy
 
 class SensorConfigReader(object):
     def __init__(self, filePath ):
@@ -22,4 +23,5 @@ class SensorConfigReader(object):
                                                       ,'Hyt221' : Hyt221
                                                       ,'Cyclic' : CyclicThermometer
                                                       ,'ProxyITMG2': ThermoProxy_ItmG2
+                                                      ,'ProxyITMG1': ThermoProxy
                                                       } )

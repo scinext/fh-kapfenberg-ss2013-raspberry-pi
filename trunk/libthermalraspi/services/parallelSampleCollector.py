@@ -25,16 +25,16 @@ class ParallelSampleCollector(SampleCollector):
         pass
     
     def __getAllSensorTemperatures(self):
-        imTheFather = True
-        children = {}   #dictionary sensorName:childPid
-        pipein, pipeout = os.pipe()
+        children = {}   #dictionary { sensorName: (childPid, pipein) } 
       
         for sensorName, sensorInstance in self.__sensorList.items():
+            pipein, pipeout = os.pipe()
             child = os.fork()
-            if child:
-                children[sensorName] = child
+            if child > 0:
+                # parent
+                children[sensorName] = ( child, pipein )
+                os.close(pipeout)
             else:
-                imTheFather = False
                 os.close(pipein)
                 
                 try:
@@ -48,12 +48,12 @@ class ParallelSampleCollector(SampleCollector):
                 os.close(pipeout)
                 os._exit(0)
 
-        if imTheFather:
+        for sensorName, (childPid, pipein) in children.items():
+            os.waitpid(childPid, 0)
             sensorDict = eval(os.read(pipein, 1024))
-            for sensorName, childPid in children.items():
-                os.waitpid(childPid, 0)
+            os.close(pipein)
                 
-                'Persistiere Messdaten in DB'
-                self.__store.add_sample(datetime.datetime.now(), sensorName, sensorDict['temp'], sensorDict['errorCode'])
+            # Persistiere Messdaten in DB
+            self.__store.add_sample(datetime.datetime.now(), sensorName, sensorDict['temp'], sensorDict['errorCode'])
                 
         pass

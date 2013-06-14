@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from libthermalraspi.database import DataStoreInMemory
+from libthermalraspi.database.DataStoreInMemory import DataStoreInMemory
 from libthermalraspi.services.SensorConfigReader import SensorConfigReader
 from libthermalraspi.services.parallelSampleCollector import ParallelSampleCollector
 from libthermalraspi.programlooper import ProgramLooper
@@ -19,7 +19,7 @@ parser.add_option("-s", "--sensors",
                   default="/tmp/sensors.cfg",
                   help="sensor config file path (default=/tmp/sensors.cfg)")
 parser.add_option("-i", "--interval",
-                  action="store", type="int", dest="INTERVAL",
+                  action="store", type="float", dest="INTERVAL",
                   default=3,
                   help="used interval in seconds(default=3)")
 parser.add_option("-d", "--dummy",
@@ -34,6 +34,7 @@ print("Config: dummy=%s, dbfile=%s, interval=%s, sensorconfig=%s" % \
 
 if options.DUMMY:
     store = DataStoreInMemory()
+    store.initSomeTestData()
 else:
     db=sqlite3.connect(options.DBFILE)
     store=DataStoreSQL(db)
