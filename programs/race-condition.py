@@ -13,8 +13,13 @@ database = {}
 # the database.
 queue = []
 
+lock = threading.Lock()
+
 producer_interval = 1
 consumer_interval = 1
+
+with lock:
+    print 'xxx'
 
 class Producer(threading.Thread):
     def run(self):

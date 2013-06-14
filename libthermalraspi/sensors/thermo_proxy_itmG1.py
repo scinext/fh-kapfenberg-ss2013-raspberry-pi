@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import socket
-from sensors.thermometer import Thermometer
+from libthermalraspi.sensors.thermometer import Thermometer
 
 class ThermoProxy(Thermometer):
     """Connects with a server"""
@@ -17,4 +17,4 @@ class ThermoProxy(Thermometer):
     
     def get_temperature(self):
         self._sock.send("GET_TEMP")
-        return self._sock.recv(1024)
+        return float(self._sock.recv(1024))
