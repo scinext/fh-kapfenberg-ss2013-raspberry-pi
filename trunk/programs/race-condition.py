@@ -12,7 +12,8 @@ import os
 
 
 # items are produced by one thread, and consumed by another.
-# items are big, and stored in a database, indexed by their ID.
+# items are big, and stored in a database, indexed by their ID. (using
+# a dictionary as a symbolic database.)
 database = {}
 
 # the IDs (simple integer values) are enqueued by the producer, and
