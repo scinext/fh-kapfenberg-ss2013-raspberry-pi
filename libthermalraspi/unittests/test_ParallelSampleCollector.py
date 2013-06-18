@@ -1,5 +1,4 @@
 # Team: Martin Krainer, Markus Koller
-# File noch in Arbeit
 
 from libthermalraspi.sensors.simulation_sensorstub import SensorStub
 from libthermalraspi.sensors.storemock import StoreMock
@@ -24,7 +23,7 @@ class ParallelSampleCollectorTest(unittest.TestCase):
  
 		# Exercise-Phase:
 		collector = ParallelSampleCollector(store, sensors)
-		#collector.run...
+		collector.run(measurements)
  
 		# Verify TODO:
 		# Jetzt müssen alle Werte von measurements in store sein...
