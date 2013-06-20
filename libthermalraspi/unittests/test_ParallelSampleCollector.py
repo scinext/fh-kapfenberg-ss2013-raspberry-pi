@@ -26,7 +26,7 @@ class ParallelSampleCollectorTest(unittest.TestCase):
 		collector.run(measurements)
  
 		# Verify TODO:
-		# Jetzt müssen alle Werte von measurements in store sein...
+		# Jetzt muessen alle Werte von measurements in store sein...
 		# Wenn ja -> Test OK	
 
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(ParallelSampleCollectorTest)

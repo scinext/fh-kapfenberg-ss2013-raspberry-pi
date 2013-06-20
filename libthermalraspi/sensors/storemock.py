@@ -1,5 +1,5 @@
 # StoreMock sammelt die Messungen, die der ParallelSampleCollector 
-# auf SensorStub durchführt.
+# auf SensorStub durchfuehrt.
 
 class StoreMock(object):
     def __init__(self):
