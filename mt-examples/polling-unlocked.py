@@ -8,6 +8,13 @@ import os
 # WARNING: THIS PROGRAM IS A DEMONSTRATION OF SOME OF THE REALLY BAD
 # (BUT, SADLY, POPULAR) PRACTICES OF INTER-THREAD COMMUNICATION. DON'T
 # EVER COPY FROM IT!!!
+
+# WEAKNESSES:
+
+# * two threads hammer on two related but unprotected datastructures
+# * the consumer polls for data. there sure is a better way.
+# * the producer produces no matter what. if the consumer does not
+#   consume fast enough, the program will run out of memory.
 # --------------------------------------------------------------------
 
 
