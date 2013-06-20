@@ -9,7 +9,6 @@ import os
 # FROM THIS ONE YOU CAN COPY. THREAD SAFE, NON-POLLING!
 # --------------------------------------------------------------------
 
-
 # items are produced by one thread, and consumed by another.
 # items are big, and stored in a database, indexed by their ID. (using
 # a dictionary as a symbolic database.)
