@@ -1,10 +1,10 @@
-#SensorStub simuliert die Temperaturmessungen und erhält einfach eine Liste 
+#SensorStub simuliert die Temperaturmessungen und erhaelt einfach eine Liste 
 #mit Messwerten, die als Testeingangswerte dienen.
 
 from libthermalraspi.sensors.thermometer import Thermometer
 
-# SensorStub erhält eine Liste an Messwerten, die
-# in get_temperature zurück geliefert werden.
+# SensorStub erhaelt eine Liste an Messwerten, die
+# in get_temperature zurueck geliefert werden.
 # Dieser Test-Stub wird verwendet um im ParallelSampleCollector
 # Messungen zu simulieren.
 class SensorStub(Thermometer):
