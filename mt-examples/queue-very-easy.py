@@ -53,12 +53,12 @@ class Consumer(threading.Thread):
 if __name__ == '__main__':
     print os.getpid()
     consumers = []
-    for i in xrange(1):
+    for i in xrange(2):
         consumer = Consumer()
         consumer.start()
         consumers.append(consumer)
     producers = []
-    for i in xrange(1):
+    for i in xrange(2):
         producer = Producer()
         producer.start()
         producers.append(producer)
