@@ -118,7 +118,7 @@ its identifier with it (which is good protocol design anyway).
 *Request*:
 
 {{{
-<request id="get_samples" from="2013-04-30 08:03:34" to="2013-04-30 09:19:52" />
+<request id="get_samples" from="2013-01-30 00:00:00" to="2013-01-30 23:59:59" />
 }}}
 
 In Python, you use the following to convert back and forth between
