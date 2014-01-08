@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Temperature Visualizer</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_Strawberry">Strawberry Sensor</string>
+    <string name="menu_Raspberry">Raspberry Sensor</string>
+    <string name="menu_Blackberry">Blackberry Sensor</string>
+    <string name="menu_Blueberry">Blueberry Sensor</string>
+
+</resources>

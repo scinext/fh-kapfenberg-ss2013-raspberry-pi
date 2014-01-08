@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_strawberry"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menu_Strawberry"/>
+    
+    <item
+        android:id="@+id/menu_raspberry"
+        android:orderInCategory="101"
+        android:showAsAction="never"
+        android:title="@string/menu_Raspberry"/>
+    
+    <item
+        android:id="@+id/menu_blackberry"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:title="@string/menu_Blackberry"/>
+    
+    <item
+        android:id="@+id/menu_blueberry"
+        android:orderInCategory="103"
+        android:showAsAction="never"
+        android:title="@string/menu_Blueberry"/>
+    
+    <item
+        android:id="@+id/menu_settings"
+        android:orderInCategory="104"
+        android:showAsAction="never"
+        android:title="@string/menu_settings"/>
+    
+    
+
+</menu>
